@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="static\css\styles.css" type="text/css">
+{% from "_formhelpers.html" import render_field %}
+<body class="body_student">
+<div class="login">
+    <div class="login-screen">
+    <div class="login-form">
+        <div class="app-title">
+				<h1>Student Login</h1>
+        </div>
+<form method=POST>
+{{ form.hidden_tag() }}
+  <dl>
+      {% if form.username.errors %}
+            {{ form.username(class="control-group is-invalid")}}
+        <div class="invalid-feedback">
+            <span>{{ form.username.errors[0] }}</span>
+        </div>
+       {% else %}
+          <div> {{ form.username.label() }} </div>
+             {{ form.username(class="control-group") }}
+             {% if wrong_username %}
+                 {{ wrong_username }}
+             {% endif %}
+       {% endif %}
+        <div> {{ form.password.label() }} </div>
+      {{ form.password(class="control-group")}}
+        {% if wrong_password %}
+             {{ wrong_password }}
+        {% endif %}
+
+  </dl>
+   {{ form.submit(class="btn")}}
+</form>
+
+    <p>Don't have an account?
+        <a href="/registerS">Register here</a>
+    </p>
+
+    </div>
+    </div>
+</div>
+{#</div>#}

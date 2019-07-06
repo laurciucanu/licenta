@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{%block title%} Laboratoare {%endblock title%}
+
+{% block contents %}
+ <h1>Laboratoare</h1>
+    {% for laborator in laborator %}
+        <p>Title: {{ laborator.title }}
+           Content: {{ laborator.content }}
+        </p>
+    {% endfor %}
+
+{% endblock contents %}

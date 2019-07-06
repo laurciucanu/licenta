@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="static\css\styles.css" type="text/css">
+{% from "_formhelpers.html" import render_field %}
+
+<div class="register">
+    <div class="register-screen">
+    <div class="register-form">
+        <div class="app-title">
+				<h1>Laborator</h1>
+        </div>
+<form method=post>
+{{ form.hidden_tag() }}
+  <dl>
+      <div> {{ form.title.label() }} </div>
+          {{ form.title(class="control-group") }}
+
+        </br>{% if empty_title %}
+                    {{ empty_title }}
+                {% endif %}
+      </br>{% if wrong_title %}
+            {{ wrong_title }}
+        {% endif %}
+
+        </br>{% if format_title_error %}
+            {{ format_title_error }}
+        {% endif %}
+
+      <div> {{ form.content.label() }} </div>
+          {{ form.content(class="control-group") }}
+
+      </br>{% if empty_content %}
+                {{ empty_content }}
+            {% endif %}
+
+       </br>{% if wrong_content %}
+            {{ password_len }}
+        {% endif %}
+{#      <div>#}
+{#        <textarea name="Content" cols="40" rows="5"></textarea> multiple lines#}
+{#      </div>#}
+
+  </dl>
+  {{  form.submit(class="btn") }}
+</form>
+    </div>
+    </div>
+</div>
