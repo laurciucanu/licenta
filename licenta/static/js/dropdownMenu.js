@@ -16,8 +16,7 @@ window.onclick = function(event) {
   }
 }
 
-//side-nav test
-
+//side-nav test js
 function SideNav() {
   document.getElementById("mySidenav").classList.toggle("show");
 }
