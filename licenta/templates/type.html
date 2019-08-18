@@ -1,16 +1,29 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
-<link rel="stylesheet" href="static\css\styles.css" type="text/css">
+
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" href="static\css\styles.css" type="text/css">
+    <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
 </head>
+
+<div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/laborator">Laboratoare</a>
+      <a href="/note">Note</a>
+      <a href='/logout'>Logout</a>
+      <a href='/register'>Teacher Registration</a>
+      <a href="/registerS">Student Registration</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+
 <body>
+<h1><center> Selectati tipul utilizatorului: </center></h1>
     <center><a href="/login" class="btn">Profesor</a></center>
     </p>
     <center><a href="/loginS" class="btn">Student</a></center>
-
 </body>
 </html>

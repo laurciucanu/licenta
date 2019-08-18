@@ -1,5 +1,19 @@
 <link rel="stylesheet" href="static\css\styles.css" type="text/css">
+<script type="text/javascript" src="static\js\dropdownMenu.js"></script>
+
 {% from "_formhelpers.html" import render_field %}
+
+<div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/laborator">Laboratoare</a>
+      <a href="/note">Note</a>
+      <a href='/logout'>Logout</a>
+      <a href='/register'>Teacher Registration</a>
+      <a href="/registerS">Student Registration</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+
 <body class="body_profesor">
 <div class="login">
     <div class="login-screen">
