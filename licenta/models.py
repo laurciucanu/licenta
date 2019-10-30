@@ -26,7 +26,6 @@ class laborator(db.Model):
     def __repr__(self):
         return f"\nLaborator: \n id: {self.id}\n title: {self.title} \n content: {self.content}\n"
 
-
 class student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), unique=True, nullable=False)

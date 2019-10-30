@@ -1,13 +1,56 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Laboratories</title>
+    <link rel="stylesheet" href="static\css\styles.css" type="text/css">
+    <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
+</head>
+
+<div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/register_laboratories">Laboratoare</a>
+      <a href="/note">Note</a>
+      <a href='/logout'>Logout</a>
+      <a href='/register'>Teacher Registration</a>
+      <a href="/registerS">Student Registration</a>
+</div>
+<body>
 {% extends "base.html" %}
 
 {%block title%} Laboratoare {%endblock title%}
 
 {% block contents %}
  <h1>Laboratoare</h1>
-    {% for laborator in laborator %}
-        <p>Title: {{ laborator.title }}
-           Content: {{ laborator.content }}
-        </p>
+{#    <ul>#}
+    <table>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+            </tr>
+    {% for labItem in laborator %}
+
+            <tr>
+{##}            <td> {{ labItem.title  }}</td>
+                <td> {{ labItem.content  }}</td>
+            </tr>
+
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#        </table>#}
+{#        <p>Title: {{ laborator.title }}#}
+{#        Content: {{ laborator.content }}#}
+{#        </p>#}
+{#        <li>  {{  labItem.id }}</li>#}
+{#        <li> {{  labItem.title }} </li>#}
+{#        <li> {{  labItem.content }} </li>#}
     {% endfor %}
+{#    </ul>#}
+            </table>
 
 {% endblock contents %}
+</body>

@@ -15,12 +15,12 @@ def home():
         return redirect(url_for('index'))
 
 
-def sql(rawsql, sqlvars={}):
-    assert type(rawsql) == str
-    assert type(sqlvars) == dict
-    res = db.session.execute(rawsql, sqlvars)
-    db.session.commit()
-    return res
+# def sql(rawsql, sqlvars={}):
+#     assert type(rawsql) == str
+#     assert type(sqlvars) == dict
+#     res = db.session.execute(rawsql, sqlvars)
+#     db.session.commit()
+#     return res
 
 @app.route("/index")
 def index():
@@ -72,7 +72,7 @@ def login():
             print("LOGIN")
             return redirect(url_for('index'))
         else:
-            print("Wronkg pass")
+            print("Wrong pass")
             return render_template('login.html', form=form, wrong_password="Wrong password!")
     else:
         print("FAILED FORM")
@@ -102,7 +102,7 @@ def register_student():
             student = studenti(name=form.username.data, password=form.password.data)
             db.session.add(student)
             db.session.commit()
-            return redirect(url_for('login'))
+            return redirect(url_for('login_student'))
 
     return render_template('register2.html', form=form)
 
@@ -138,36 +138,36 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/laborator', methods=['GET', 'POST'])
-def laboratories():
+@app.route('/register_laboratories', methods=['GET', 'POST'])
+def register_laboratories():
     form = LaboratorForm(request.form)
     print(form.validate())
 
     if form.validate_on_submit():
         print(form.validate())
         if len(form.title.data) == 0:
-            return render_template("laborator.html", form=form, empty_title="Enter a title!")
+            return render_template("register_laboratories.html", form=form, empty_title="Enter a title!")
         elif len(form.title.data) < 4 or len(form.title.data) > 100:
             print("wrong title format")
-            return render_template("laborator.html", form=form, format_title_error="Title must be between 4 and 100 characters!")
+            return render_template("register_laboratories.html", form=form, format_title_error="Title must be between 4 and 100 characters!")
 
         exist_laborator = laborator.query.filter_by(title=form.title.data).first()
 
         if exist_laborator:
             print("wrong title")
-            return render_template("laborator.html", form=form, wrong_title="\n Enter another title!")
+            return render_template("register_laboratories.html", form=form, wrong_title="\n Enter another title!")
         elif len(form.content.data) == 0:
-            return render_template("laborator.html", form=form, empty_content="\n Enter some content!")
+            return render_template("register_laboratories.html", form=form, empty_content="\n Enter some content!")
         elif len(form.content.data) > 500:
-            return render_template("laborator.html", form=form, wrong_content="\n Enter maximum 500 characters!")
+            return render_template("register_laboratories.html", form=form, wrong_content="\n Enter maximum 500 characters!")
         else:
             print("laborator added")
             laboratory = laborator(title=form.title.data, content=form.content.data)
             db.session.add(laboratory)
             db.session.commit()
-            return redirect(url_for('laboratories'))
+            return redirect(url_for('view_laboratories'))
 
-    return render_template('laborator.html', form=form)
+    return render_template('register_laboratories.html', form=form)
 
 
 # @app.route('/upload')
@@ -187,13 +187,13 @@ def laboratories():
 def grade():
     return render_template("note.html")
 
-
 @app.route("/view_laboratories")
-def laborator():
-    laborator = sql("SELECT title,content FROM laborator;")
-    return render_template("view_laboratories.html", laborator=laborator)
+def view_laboratories():
+    query = db.session.execute("SELECT title,content FROM laborator;")
+
+    return render_template("view_laboratories.html", laborator=query)
 
 if __name__ == "__main__":
     # app.secret_key = os.urandom(12)
-    app.run(debug=True, host='0.0.0.0', port=5431)
-    # app.run(debug=True)
+    # app.run(debug=True, host='0.0.0.0', port=5431)
+    app.run(debug=True)
