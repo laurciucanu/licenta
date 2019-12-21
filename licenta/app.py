@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, request, session, url_for
 
 from licenta.forms import RegistrationForm, LoginForm, LaboratorForm
 from licenta import app, db
-from licenta.models import profesori, laborator, studenti
+from licenta.models import profesori, laborator, student
 from flask_sqlalchemy import get_debug_queries
 from sqlalchemy import *
 
@@ -31,7 +31,7 @@ def type():
     return render_template("type.html")
 
 @app.route('/register_teacher', methods=['GET', 'POST'])
-def register():
+def register_teacher():
     form = RegistrationForm(request.form)
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
@@ -88,7 +88,7 @@ def register_student():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
             return render_template("register_student.html", form=form, error_format_username="Username must be between 4 and 20 chars!")
 
-        exist_student = studenti.query.filter_by(name=form.username.data).first()
+        exist_student = student.query.filter_by(name=form.username.data).first()
 
         if exist_student:
             print("before render")
@@ -99,7 +99,7 @@ def register_student():
             return render_template("register_student.html", form=form, password_match="\n Passwords must match!")
         else:
             print("student added")
-            student = studenti(name=form.username.data, password=form.password.data)
+            student_entry = student(name=form.username.data, password=form.password.data)
             db.session.add(student)
             db.session.commit()
             return redirect(url_for('login_student'))
@@ -113,9 +113,9 @@ def login_student():
     print(form.username.data)
     print(form.password.data)
     if form.validate_on_submit():
-        student = studenti.query.filter_by(name=form.username.data).first()
+        student_entry = student.query.filter_by(name=form.username.data).first()
 
-        if not student:
+        if not student_entry:
             return render_template('login2.html', form=form, wrong_username="Wrong username!")
 
         if form.password.data == student.password:
