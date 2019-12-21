@@ -29,6 +29,8 @@ class laborator(db.Model):
 class student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), unique=True, nullable=False)
+    type = db.Column(db.String(7), unique=False, nullable=False)
+    year = db.Column(db.Integer(1), unique=False, nullable=False)
     group = db.Column(db.String(5), unique=False, nullable=False)
 
     def __repr__(self):

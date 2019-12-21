@@ -30,22 +30,22 @@ def index():
 def type():
     return render_template("type.html")
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register_teacher', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
-            return render_template("register.html", form=form, error_format_username="Username must be between 4 and 20 chars!")
+            return render_template("register_teacher.html", form=form, error_format_username="Username must be between 4 and 20 chars!")
 
         exist_profesor = profesori.query.filter_by(name=form.username.data).first()
 
         if exist_profesor:
             print("before render")
-            return render_template("register.html", form=form, error_msg="\n Enter another name!")
+            return render_template("register_teacher.html", form=form, error_msg="\n Enter another name!")
         elif len(form.password.data) == 0:
-            return render_template("register.html", form=form, password_len="\n Enter a password!")
+            return render_template("register_teacher.html", form=form, password_len="\n Enter a password!")
         elif form.password.data != form.confirm.data:
-            return render_template("register.html", form=form, password_match="\n Passwords must match!")
+            return render_template("register_teacher.html", form=form, password_match="\n Passwords must match!")
         else:
             print("prof added")
             profesor = profesori(name=form.username.data, password=form.password.data)
@@ -53,7 +53,7 @@ def register():
             db.session.commit()
             return redirect(url_for('login'))
 
-    return render_template('register.html', form=form)
+    return render_template('register_teacher.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -81,22 +81,22 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/registerS', methods=['GET', 'POST'])
+@app.route('/register_student', methods=['GET', 'POST'])
 def register_student():
     form = RegistrationForm(request.form)
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
-            return render_template("register2.html", form=form, error_format_username="Username must be between 4 and 20 chars!")
+            return render_template("register_student.html", form=form, error_format_username="Username must be between 4 and 20 chars!")
 
         exist_student = studenti.query.filter_by(name=form.username.data).first()
 
         if exist_student:
             print("before render")
-            return render_template("register2.html", form=form, error_msg="\n Enter another name!")
+            return render_template("register_student.html", form=form, error_msg="\n Enter another name!")
         elif len(form.password.data) == 0:
-            return render_template("register2.html", form=form, password_len="\n Enter a password!")
+            return render_template("register_student.html", form=form, password_len="\n Enter a password!")
         elif form.password.data != form.confirm.data:
-            return render_template("register2.html", form=form, password_match="\n Passwords must match!")
+            return render_template("register_student.html", form=form, password_match="\n Passwords must match!")
         else:
             print("student added")
             student = studenti(name=form.username.data, password=form.password.data)
@@ -104,7 +104,7 @@ def register_student():
             db.session.commit()
             return redirect(url_for('login_student'))
 
-    return render_template('register2.html', form=form)
+    return render_template('register_student.html', form=form)
 
 
 @app.route('/loginS', methods=['GET', 'POST'])
