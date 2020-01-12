@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, request, session, url_for
 
 from licenta.forms import RegistrationForm, LoginForm, LaboratorForm
 from licenta import app, db
-from licenta.models import profesori, laborator, student
+from licenta.models import profesori, laborator, studenti
 from flask_sqlalchemy import get_debug_queries
 from sqlalchemy import *
 
@@ -10,7 +10,7 @@ from sqlalchemy import *
 @app.route('/')
 def home():
     if not session.get('logged_in'):
-        return redirect(url_for('login'))
+        return redirect(url_for('login_teacher'))
     else:
         return redirect(url_for('index'))
 
@@ -51,13 +51,13 @@ def register_teacher():
             profesor = profesori(name=form.username.data, password=form.password.data)
             db.session.add(profesor)
             db.session.commit()
-            return redirect(url_for('login'))
+            return redirect(url_for('login_teacher'))
 
     return render_template('register_teacher.html', form=form)
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/login_teacher', methods=['GET', 'POST'])
+def login_teacher():
     form = LoginForm()
     print(form.username.data)
     print(form.password.data)
@@ -65,7 +65,7 @@ def login():
         profesor = profesori.query.filter_by(name=form.username.data).first()
 
         if not profesor:
-            return render_template('login.html', form=form, wrong_username="Wrong username!")
+            return render_template('login_teacher.html', form=form, wrong_username="Wrong username!")
 
         if form.password.data == profesor.password:
             session['logged_in'] = True
@@ -73,12 +73,12 @@ def login():
             return redirect(url_for('index'))
         else:
             print("Wrong pass")
-            return render_template('login.html', form=form, wrong_password="Wrong password!")
+            return render_template('login_teacher.html', form=form, wrong_password="Wrong password!")
     else:
         print("FAILED FORM")
         flash("Try again!")
 
-    return render_template('login.html', form=form)
+    return render_template('login_teacher.html', form=form)
 
 
 @app.route('/register_student', methods=['GET', 'POST'])
@@ -88,7 +88,7 @@ def register_student():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
             return render_template("register_student.html", form=form, error_format_username="Username must be between 4 and 20 chars!")
 
-        exist_student = student.query.filter_by(name=form.username.data).first()
+        exist_student = studenti.query.filter_by(name=form.username.data).first()
 
         if exist_student:
             print("before render")
@@ -99,43 +99,43 @@ def register_student():
             return render_template("register_student.html", form=form, password_match="\n Passwords must match!")
         else:
             print("student added")
-            student_entry = student(name=form.username.data, password=form.password.data)
-            db.session.add(student)
+            student_entry = studenti(name=form.username.data, password=form.password.data)
+            db.session.add(student_entry)
             db.session.commit()
             return redirect(url_for('login_student'))
 
     return render_template('register_student.html', form=form)
 
 
-@app.route('/loginS', methods=['GET', 'POST'])
+@app.route('/login_student', methods=['GET', 'POST'])
 def login_student():
     form = LoginForm()
     print(form.username.data)
     print(form.password.data)
     if form.validate_on_submit():
-        student_entry = student.query.filter_by(name=form.username.data).first()
+        student_entry = studenti.query.filter_by(name=form.username.data).first()
 
         if not student_entry:
-            return render_template('login2.html', form=form, wrong_username="Wrong username!")
+            return render_template('login_student.html', form=form, wrong_username="Wrong username!")
 
-        if form.password.data == student.password:
+        if form.password.data == studenti.password:
             session['logged_in'] = True
             print("LOGIN")
             return redirect(url_for('index'))
         else:
             print("Wrong pass")
-            return render_template('login2.html', form=form, wrong_password="Wrong password!")
+            return render_template('login_student.html', form=form, wrong_password="Wrong password!")
     else:
         print("FAILED FORM")
         flash("Try again!")
 
-    return render_template('login2.html', form=form)
+    return render_template('login_student.html', form=form)
 
 
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
-    return redirect(url_for('login'))
+    return redirect(url_for('login_teacher'))
 
 
 @app.route('/register_laboratories', methods=['GET', 'POST'])

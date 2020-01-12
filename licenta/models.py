@@ -9,13 +9,13 @@ class profesori(db.Model):
         return f"\nProfessor_User: \n id: {self.id}\n name: {self.name} \n password: {self.password}\n"
 
 
-# class studenti(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(30), unique=True, nullable=False)
-#     password = db.Column(db.String(50), unique=False, nullable=False)
-#
-#     def __repr__(self):
-#         return f"\nStudent_User: \n id: {self.id}\n name: {self.name} \n password: {self.password}\n"
+class studenti(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), unique=True, nullable=False)
+    password = db.Column(db.String(50), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f"\nStudent_User: \n id: {self.id}\n name: {self.name} \n password: {self.password}\n"
 
 
 class laborator(db.Model):
@@ -29,13 +29,13 @@ class laborator(db.Model):
 class student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), unique=True, nullable=False)
-    type = db.Column(db.String(7), unique=False, nullable=False)
-    year = db.Column(db.Integer, unique=False, nullable=False)
+    # type = db.Column(db.String(7), unique=False, nullable=False)
+    # year = db.Column(db.Integer, unique=False, nullable=False)
     group = db.Column(db.String(5), unique=False, nullable=False)
 
     def __repr__(self):
-        return f"\nStudent: \n id: {self.id}\n name: {self.name} \n type: {self.type} \n year: {self.year} \n group: {self.group}\n"
-
+        # return f"\nStudent: \n id: {self.id}\n name: {self.name} \n type: {self.type} \n year: {self.year} \n group: {self.group}\n"
+        return f"\nStudent: \n id: {self.id}\n name: {self.name} \n group: {self.group}\n"
 
 class grade(db.Model):
     id = db.Column(db.Integer, primary_key=True)
