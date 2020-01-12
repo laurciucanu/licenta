@@ -3,8 +3,6 @@ from flask import flash, redirect, render_template, request, session, url_for
 from licenta.forms import RegistrationForm, LoginForm, LaboratorForm
 from licenta import app, db
 from licenta.models import profesori, laborator, studenti
-from flask_sqlalchemy import get_debug_queries
-from sqlalchemy import *
 
 
 @app.route('/')
@@ -13,14 +11,6 @@ def home():
         return redirect(url_for('login_teacher'))
     else:
         return redirect(url_for('index'))
-
-
-# def sql(rawsql, sqlvars={}):
-#     assert type(rawsql) == str
-#     assert type(sqlvars) == dict
-#     res = db.session.execute(rawsql, sqlvars)
-#     db.session.commit()
-#     return res
 
 @app.route("/index")
 def index():

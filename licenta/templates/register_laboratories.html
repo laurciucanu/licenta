@@ -26,14 +26,18 @@
       <div> {{ form.title.label() }} </div>
           {{ form.title(class="control-group") }}
 
-        </br>{% if empty_title %}
+        </br>
+        {% if empty_title %}
                     {{ empty_title }}
-                {% endif %}
-      </br>{% if wrong_title %}
+        {% endif %}
+
+        </br>
+        {% if wrong_title %}
             {{ wrong_title }}
         {% endif %}
 
-        </br>{% if format_title_error %}
+        </br>
+        {% if format_title_error %}
             {{ format_title_error }}
         {% endif %}
 

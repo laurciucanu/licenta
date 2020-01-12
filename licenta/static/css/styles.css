@@ -331,6 +331,7 @@ input {
 }
 
 input#content{
+    vertical-align: top;
     text-align: left;
     background-color: #ECF0F1;
     border: 2px solid transparent;
