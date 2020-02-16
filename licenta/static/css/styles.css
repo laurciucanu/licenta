@@ -260,6 +260,15 @@ td, th {
 box-sizing: border-box;
 }
 
+.header{
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 *:focus {
 	outline: none;
 }
@@ -270,9 +279,16 @@ padding: 50px;
 }
 
 .body_student {
-font-family: Arial;
-background-color: #61dbcd;
-padding: 50px;
+  background: url("../images/4.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /*width: 100%;*/
+  /*height: auto;*/
+  font-family: Arial;
+  /*background-color: #db0016;*/
+  padding: 50px;
 }
 
 body_profesor{

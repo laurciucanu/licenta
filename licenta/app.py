@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, request, session, url_for
 
 from licenta.forms import RegistrationForm, LoginForm, LaboratorForm
 from licenta import app, db
-from licenta.models import profesori, laborator, studenti
+from licenta.models import *
 
 
 @app.route('/')
