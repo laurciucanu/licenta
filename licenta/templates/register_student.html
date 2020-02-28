@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="static\css\styles.css" type="text/css">
 <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
+{#<script type="text/javascript" src="static\js\passwordField.js"></script>#}
 
 {% from "_formhelpers.html" import render_field %}
 
@@ -36,10 +37,14 @@
             {{ error_format_username }}
         {% endif %}
 
-      <div>  {{ form.password.label() }} </div>
-        {{ form.password(class="control-group") }}
+      <div>  {{ form.password.label() }}
 
-      </br>{% if password_len %}
+      </div>
+        {{ form.password(class="control-group") }}
+{#       <input id="password-field" type="password" class="form-control" name="password" value="secret">#}
+{#      <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"> </span>#}
+      </br>
+      {% if password_len %}
             {{ password_len }}
         {% endif %}
 

@@ -60,7 +60,7 @@ def login_teacher():
         if form.password.data == profesor.password:
             session['logged_in'] = True
             print("LOGIN")
-            return redirect(url_for('index'))
+            return render_template('index.html', name=form.username.data)
         else:
             print("Wrong pass")
             return render_template('login_teacher.html', form=form, wrong_password="Wrong password!")
