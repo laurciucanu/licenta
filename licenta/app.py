@@ -108,7 +108,7 @@ def login_student():
         if not student_entry:
             return render_template('login_student.html', form=form, wrong_username="Wrong username!")
 
-        if form.password.data == studenti.password:
+        if form.password.data == student_entry.password:
             session['logged_in'] = True
             print("LOGIN")
             return redirect(url_for('index'))
