@@ -284,17 +284,17 @@ padding: 50px;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  /*width: 100%;*/
-  /*height: auto;*/
   font-family: Arial;
-  /*background-color: #db0016;*/
-  padding: 50px;
+
 }
 
 .body_profesor{
-  background: url("../images/3.jpg") no-repeat center center fixed;
+  background: url("../images/3.jpg");
+  height: 100%;
   font-family: Arial;
-  padding: 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .login {
@@ -331,7 +331,6 @@ padding: 50px;
   width: 338px;
 }
 }
-
 
 .app-title {
 text-align: center;
