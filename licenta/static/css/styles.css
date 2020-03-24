@@ -291,11 +291,12 @@ padding: 50px;
   padding: 50px;
 }
 
-body_profesor{
+.body_profesor{
+  background: url("../images/3.jpg") no-repeat center center fixed;
   font-family: Arial;
-  background-color: #0829db;
   padding: 50px;
 }
+
 .login {
   margin: 20px auto;
   width: 300px;
@@ -312,12 +313,25 @@ body_profesor{
   padding: 20px;
   border-radius: 5px;
 }
-.register-screen{
+@media (max-width: 765px){
+.register{
+  float: right;
   background-color: #FFF;
   padding: 20px;
   border-radius: 5px;
   width: 338px;
 }
+}
+
+@media (min-width: 765px){
+  .register{
+  background-color: #FFF;
+  padding: 20px;
+  border-radius: 5px;
+  width: 338px;
+}
+}
+
 
 .app-title {
 text-align: center;
