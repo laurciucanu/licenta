@@ -1,9 +1,9 @@
 from flask import flash, redirect, render_template, request, session, url_for
-
 from licenta.forms import RegistrationForm, LoginForm, LaboratorForm
 from licenta import app, db
 from licenta.models import *
-
+from werkzeug.utils import secure_filename
+import os
 
 @app.route('/')
 def home():
@@ -159,23 +159,10 @@ def register_laboratories():
 
     return render_template('register_laboratories.html', form=form)
 
-
-# @app.route('/upload')
-# def upload_file():
-#     return render_template('upload.html')
-#
-#
-# @app.route('/uploader', methods=['GET', 'POST'])
-# def upload_file():
-#     if request.method == 'POST':
-#         f = request.files['file']
-#         f.save(secure_filename(f.filename))
-#         return 'file uploaded successfully'
-
-
 @app.route("/note")
 def grade():
     return render_template("note.html")
+
 
 @app.route("/view_laboratories")
 def view_laboratories():
@@ -183,7 +170,46 @@ def view_laboratories():
 
     return render_template("view_laboratories.html", laborator=query)
 
+
+ALLOWED_EXTENSIONS = set(['zip', 'rar', '7z'])
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/upload')
+def upload_form():
+    return render_template('upload.html')
+
+
+@app.route('/', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+
+        if file.filename == '':
+            flash('No file selected for uploading')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash('File successfully uploaded')
+            return redirect('/upload')
+        else:
+            flash('Allowed file types zip, rar and 7z!')
+            return redirect('/upload')
+
+
 if __name__ == "__main__":
     # app.secret_key = os.urandom(12)
     # app.run(debug=True, host='0.0.0.0', port=5431)
+    # Upload homework default path
+    UPLOAD_FOLDER = 'D:/uploads'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
     app.run(debug=True)

@@ -289,11 +289,9 @@ padding: 50px;
 }
 
 .body_profesor{
-  background: url("../images/3.jpg");
   height: 100%;
   font-family: Arial;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url("../images/3.jpg") no-repeat center;
   background-size: cover;
 }
 
@@ -395,6 +393,22 @@ box-shadow: none;
   margin: 0 auto;
 }
 
+.input_upload{
+  border: 2px solid transparent;
+  background: #0bdb00;
+  color: black;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  display: block;
+  width: 250px;
+  margin: 0 auto;
+}
 .register-btn{
   border: 2px solid transparent;
   background: #dbd700;
