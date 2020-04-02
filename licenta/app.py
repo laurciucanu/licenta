@@ -167,14 +167,11 @@ def grade():
 @app.route("/view_laboratories")
 def view_laboratories():
     query = db.session.execute("SELECT title,content FROM laborator;")
-
     return render_template("view_laboratories.html", laborator=query)
 
 
-ALLOWED_EXTENSIONS = set(['zip', 'rar', '7z'])
-
-
 def allowed_file(filename):
+    ALLOWED_EXTENSIONS = set(['zip', 'rar', '7z'])
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
