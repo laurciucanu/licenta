@@ -122,6 +122,7 @@ def login_student():
     return render_template('login_student.html', form=form)
 
 
+
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
