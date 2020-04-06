@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request, session, url_for
+from flask import flash, redirect, render_template, request, session, url_for, make_response
 from licenta.forms import RegistrationForm, LoginForm, LaboratorForm
 from licenta import app, db
 from licenta.models import *
@@ -201,6 +201,12 @@ def upload_file():
         else:
             flash('Allowed file types zip, rar and 7z!')
             return redirect('/upload')
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
 
 if __name__ == "__main__":
