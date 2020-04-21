@@ -1,4 +1,6 @@
 from flask import flash, redirect, render_template, request, session, url_for, make_response
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from licenta.forms import RegistrationForm, LoginForm, LaboratorForm
 from licenta import app, db
 from licenta.models import *
@@ -81,7 +83,6 @@ def register_student():
         exist_student = studenti.query.filter_by(name=form.username.data).first()
 
         if exist_student:
-            print("before render")
             return render_template("register_student.html", form=form, error_msg="\n Enter another name!")
         elif len(form.password.data) == 0:
             return render_template("register_student.html", form=form, password_len="\n Enter a password!")
@@ -171,6 +172,12 @@ def view_laboratories():
     return render_template("view_laboratories.html", laborator=query)
 
 
+@app.route("/view_cursuri")
+def view_cursuri():
+    query = db.session.execute("SELECT title, an, semestru  FROM cursuri;")
+    return render_template("view_cursuri.html", cursuri=query)
+
+
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = set(['zip', 'rar', '7z'])
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -214,6 +221,8 @@ if __name__ == "__main__":
     # app.run(debug=True, host='0.0.0.0', port=5431)
     # Upload homework default path
     UPLOAD_FOLDER = 'D:/uploads'
+    db.init_app(app)
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+    db.create_all()
     app.run(debug=True)
