@@ -1,6 +1,4 @@
 from flask import flash, redirect, render_template, request, session, url_for, make_response
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from licenta.forms import RegistrationForm, LoginForm, LaboratorForm
 from licenta import app, db
 from licenta.models import *
@@ -32,14 +30,12 @@ def register_teacher():
         exist_profesor = profesori.query.filter_by(name=form.username.data).first()
 
         if exist_profesor:
-            print("before render")
             return render_template("register_teacher.html", form=form, error_msg="\n Enter another name!")
         elif len(form.password.data) == 0:
             return render_template("register_teacher.html", form=form, password_len="\n Enter a password!")
         elif form.password.data != form.confirm.data:
             return render_template("register_teacher.html", form=form, password_match="\n Passwords must match!")
         else:
-            print("prof added")
             profesor = profesori(name=form.username.data, password=form.password.data)
             db.session.add(profesor)
             db.session.commit()
@@ -51,8 +47,6 @@ def register_teacher():
 @app.route('/login_teacher', methods=['GET', 'POST'])
 def login_teacher():
     form = LoginForm()
-    print(form.username.data)
-    print(form.password.data)
     if form.validate_on_submit():
         profesor = profesori.query.filter_by(name=form.username.data).first()
 
@@ -61,13 +55,10 @@ def login_teacher():
 
         if form.password.data == profesor.password:
             session['logged_in'] = True
-            print("LOGIN")
             return render_template('index.html', name=form.username.data)
         else:
-            print("Wrong pass")
             return render_template('login_teacher.html', form=form, wrong_password="Wrong password!")
     else:
-        print("FAILED FORM")
         flash("Try again!")
 
     return render_template('login_teacher.html', form=form)
@@ -89,7 +80,6 @@ def register_student():
         elif form.password.data != form.confirm.data:
             return render_template("register_student.html", form=form, password_match="\n Passwords must match!")
         else:
-            print("student added")
             student_entry = studenti(name=form.username.data, password=form.password.data)
             db.session.add(student_entry)
             db.session.commit()
@@ -101,8 +91,6 @@ def register_student():
 @app.route('/login_student', methods=['GET', 'POST'])
 def login_student():
     form = LoginForm()
-    print(form.username.data)
-    print(form.password.data)
     if form.validate_on_submit():
         student_entry = studenti.query.filter_by(name=form.username.data).first()
 
@@ -111,13 +99,10 @@ def login_student():
 
         if form.password.data == student_entry.password:
             session['logged_in'] = True
-            print("LOGIN")
             return render_template('index.html', name=form.username.data)
         else:
-            print("Wrong pass")
             return render_template('login_student.html', form=form, wrong_password="Wrong password!")
     else:
-        print("FAILED FORM")
         flash("Try again!")
 
     return render_template('login_student.html', form=form)
@@ -133,27 +118,22 @@ def logout():
 @app.route('/register_laboratories', methods=['GET', 'POST'])
 def register_laboratories():
     form = LaboratorForm(request.form)
-    print(form.validate())
 
     if form.validate_on_submit():
-        print(form.validate())
         if len(form.title.data) == 0:
             return render_template("register_laboratories.html", form=form, empty_title="Enter a title!")
         elif len(form.title.data) < 4 or len(form.title.data) > 100:
-            print("wrong title format")
             return render_template("register_laboratories.html", form=form, format_title_error="Title must be between 4 and 100 characters!")
 
         exist_laborator = laborator.query.filter_by(title=form.title.data).first()
 
         if exist_laborator:
-            print("wrong title")
             return render_template("register_laboratories.html", form=form, wrong_title="\n Enter another title!")
         elif len(form.content.data) == 0:
             return render_template("register_laboratories.html", form=form, empty_content="\n Enter some content!")
         elif len(form.content.data) > 500:
             return render_template("register_laboratories.html", form=form, wrong_content="\n Enter maximum 500 characters!")
         else:
-            print("laborator added")
             laboratory = laborator(title=form.title.data, content=form.content.data)
             db.session.add(laboratory)
             db.session.commit()
@@ -212,17 +192,12 @@ def upload_file():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    # note that we set the 404 status explicitly
     return render_template('404.html'), 404
 
 
 if __name__ == "__main__":
-    # app.secret_key = os.urandom(12)
-    # app.run(debug=True, host='0.0.0.0', port=5431)
     # Upload homework default path
     UPLOAD_FOLDER = 'D:/uploads'
-    db.init_app(app)
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-    db.create_all()
     app.run(debug=True)
