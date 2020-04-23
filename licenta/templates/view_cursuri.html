@@ -1,9 +1,7 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Laboratories</title>
-    <link rel="stylesheet" href="static\css\styles.css" type="text/css">
-    <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
-</head>
+<link rel="stylesheet" href="static\css\styles.css" type="text/css">
+<script type="text/javascript" src="static\js\dropdownMenu.js"></script>
+
+{% from "_formhelpers.html" import render_field %}
 
 <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -14,13 +12,15 @@
       <a href="/register_student">Student Registration</a>
       <a href="/upload">Homework upload</a>
 </div>
+
+<span style="font-size:30px;cursor:pointer; color: #000000" onclick="openNav()">&#9776; Menu</span>
 <body>
 {% extends "base.html" %}
 
 {%block title%} Cursuri {%endblock title%}
 
 {% block contents %}
- <h1>Cursuri</h1>
+ <h1><center>Cursuri</center></h1>
 
     <table>
             <tr>
