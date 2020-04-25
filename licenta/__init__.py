@@ -8,4 +8,5 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 db.create_all()
+db.session.commit()
 db.init_app(app)

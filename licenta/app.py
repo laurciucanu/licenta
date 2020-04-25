@@ -5,6 +5,7 @@ from licenta.models import *
 from werkzeug.utils import secure_filename
 import os
 
+
 @app.route('/')
 def home():
     if not session.get('logged_in'):
@@ -193,6 +194,7 @@ def upload_file():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
 
 
 if __name__ == "__main__":
