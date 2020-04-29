@@ -170,37 +170,6 @@ def grade():
     return render_template("note.html")
 
 
-@app.route("/edit_student", methods=['GET', 'POST'])
-def edit_student():
-    form = StudentForm(request.form)
-    student = LoginForm()
-    if form.validate():
-        if len(form.nr_matricol.data) != 16:
-            return render_template("edit_student.html", form=form,
-                                   error_format_nr_matricol="Nr_matricol must have 16 characters!")
-
-        exist_nr_matricol = studenti.query.filter_by(name=form.nr_matricol.data).first()
-
-        if exist_nr_matricol:
-            return render_template("edit_student.html", form=form,
-                                   nr_matricol_error="\n Enter the correct nr_matricol!")
-        elif len(form.type.data) == 0:
-            return render_template("edit_student.html", form=form, type_length="\n Enter the type!")
-        elif len(str(form.year.data)) == 0:
-            return render_template("edit_student.html", form=form, year_length="\n Enter the year!")
-        elif len(form.group.data) == 0:
-            return render_template("edit_student.html", form=form, group_length="\n Enter the group!")
-        else:
-            student_edit = studenti(name=student.name.data, password=student.password.data,
-                                    nr_matricol=form.nr_matricol.data, type=form.type.data, year=form.year.data,
-                                    group=form.group.data)
-            db.session.add(student_edit)
-            db.session.commit()
-            return redirect(url_for('index'))
-
-    return render_template('edit_student.html', form=form)
-
-
 @app.route("/view_laboratories")
 def view_laboratories():
     query = db.session.execute("SELECT title,content FROM laborator;")
