@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="static\css\styles.css" type="text/css">
 <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
-{#<script type="text/javascript" src="static\js\passwordField.js"></script>#}
 
 {% from "_formhelpers.html" import render_field %}
 
@@ -30,32 +29,80 @@
         <div> {{ form.username.label() }} </div>
         {{ form.username(class="control-group") }}
 
-       </br>{% if error_msg %}
+       </br>
+      <span style="color: red">
+          {% if error_msg %}
             {{ error_msg }}
+            {% endif %}
+
+            {% if error_format_username %}
+                {{ error_format_username }}
+            {% endif %}
+      </span>
+
+        <div> {{ form.nr_matricol.label() }} </div>
+        {{ form.nr_matricol(class="control-group") }}
+
+       </br>
+        <span style="color: red">
+      {% if error_format_nr_matricol %}
+            {{ error_format_nr_matricol }}
         {% endif %}
 
-        {% if error_format_username %}
-            {{ error_format_username }}
+      {% if nr_matricol_error %}
+            {{ nr_matricol_error }}
         {% endif %}
+        </span>
+
+        <div> {{ form.type.label() }} </div>
+              {{ form.type(class="control-group") }}
+
+       </br> <span style="color: red">
+                {% if type_length %}
+                    {{ type_length }}
+                {% endif %}
+             </span>
+
+   <div> {{ form.year.label() }} </div>
+         {{ form.year(class="control-group") }}
+
+       </br>
+      <span style="color: red">
+                {% if year_length %}
+                    {{ year_length }}
+                {% endif %}
+      </span>
+
+      <div> {{ form.group.label() }} </div>
+              {{ form.group(class="control-group") }}
+
+       </br>
+        <span style="color: red">
+            {% if group_length %}
+                {{ group_length }}
+            {% endif %}
+        </span>
 
       <div>  {{ form.password.label() }}
 
       </div>
         {{ form.password(class="control-group") }}
-{#       <input id="password-field" type="password" class="form-control" name="password" value="secret">#}
-{#      <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"> </span>#}
       </br>
+     <span style="color: red">
       {% if password_len %}
             {{ password_len }}
         {% endif %}
+     </span>
 
         <div> {{ form.confirm.label() }} </div>
         {{ form.confirm(class="control-group") }}
 
         </br>
+  <span style="color: red">
             {% if password_match %}
             {{ password_match }}
         {% endif %}
+  </span>
   </dl>
   {{  form.submit(class="btn") }}
 </form>

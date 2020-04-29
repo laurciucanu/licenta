@@ -13,20 +13,24 @@ def home():
     else:
         return redirect(url_for('index'))
 
+
 @app.route("/index")
 def index():
     return render_template("index.html")
 
+
 @app.route("/type")
 def type():
     return render_template("type.html")
+
 
 @app.route('/register_teacher', methods=['GET', 'POST'])
 def register_teacher():
     form = RegistrationForm(request.form)
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
-            return render_template("register_teacher.html", form=form, error_format_username="Username must be between 4 and 20 chars!")
+            return render_template("register_teacher.html", form=form,
+                                   error_format_username="Username must be between 4 and 20 chars!")
 
         exist_profesor = profesori.query.filter_by(name=form.username.data).first()
 
@@ -67,21 +71,38 @@ def login_teacher():
 
 @app.route('/register_student', methods=['GET', 'POST'])
 def register_student():
-    form = RegistrationForm(request.form)
+    form = StudentForm(request.form)
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
-            return render_template("register_student.html", form=form, error_format_username="Username must be between 4 and 20 chars!")
+            return render_template("register_student.html", form=form,
+                                   error_format_username="Username must be between 4 and 20 chars!")
 
         exist_student = studenti.query.filter_by(name=form.username.data).first()
+        exist_nr_matricol = studenti.query.filter_by(nr_matricol=form.nr_matricol.data).first()
 
         if exist_student:
             return render_template("register_student.html", form=form, error_msg="\n Enter another name!")
+        elif exist_nr_matricol:
+            return render_template("register_student.html", form=form,
+                                   nr_matricol_error="\n This nr_matricol is already registered!")
+        elif len(form.nr_matricol.data) != 16:
+            return render_template("register_student.html", form=form,
+                                   error_format_nr_matricol="Nr_matricol must have 16 characters!")
+        elif len(form.type.data) == 0:
+            return render_template("register_student.html", form=form, type_length="\n Enter the type!")
+        elif len(str(form.year.data)) == 0:
+            return render_template("register_student.html", form=form, year_length="\n Enter the year!")
+        elif len(form.group.data) == 0:
+            return render_template("register_student.html", form=form, group_length="\n Enter the group!")
         elif len(form.password.data) == 0:
             return render_template("register_student.html", form=form, password_len="\n Enter a password!")
         elif form.password.data != form.confirm.data:
             return render_template("register_student.html", form=form, password_match="\n Passwords must match!")
         else:
-            student_entry = studenti(name=form.username.data, password=form.password.data)
+            student_entry = studenti(name=form.username.data, password=form.password.data,
+                                     nr_matricol=form.nr_matricol.data, type=form.type.data,
+                                     year=form.year.data,
+                                     group=form.group.data)
             db.session.add(student_entry)
             db.session.commit()
             return redirect(url_for('login_student'))
@@ -109,7 +130,6 @@ def login_student():
     return render_template('login_student.html', form=form)
 
 
-
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
@@ -124,7 +144,8 @@ def register_laboratories():
         if len(form.title.data) == 0:
             return render_template("register_laboratories.html", form=form, empty_title="Enter a title!")
         elif len(form.title.data) < 4 or len(form.title.data) > 100:
-            return render_template("register_laboratories.html", form=form, format_title_error="Title must be between 4 and 100 characters!")
+            return render_template("register_laboratories.html", form=form,
+                                   format_title_error="Title must be between 4 and 100 characters!")
 
         exist_laborator = laborator.query.filter_by(title=form.title.data).first()
 
@@ -133,7 +154,8 @@ def register_laboratories():
         elif len(form.content.data) == 0:
             return render_template("register_laboratories.html", form=form, empty_content="\n Enter some content!")
         elif len(form.content.data) > 500:
-            return render_template("register_laboratories.html", form=form, wrong_content="\n Enter maximum 500 characters!")
+            return render_template("register_laboratories.html", form=form,
+                                   wrong_content="\n Enter maximum 500 characters!")
         else:
             laboratory = laborator(title=form.title.data, content=form.content.data)
             db.session.add(laboratory)
@@ -141,6 +163,7 @@ def register_laboratories():
             return redirect(url_for('view_laboratories'))
 
     return render_template('register_laboratories.html', form=form)
+
 
 @app.route("/note")
 def grade():
@@ -159,7 +182,8 @@ def edit_student():
         exist_nr_matricol = studenti.query.filter_by(name=form.nr_matricol.data).first()
 
         if exist_nr_matricol:
-            return render_template("edit_student.html", form=form, nr_matricol_error="\n Enter the correct nr_matricol!")
+            return render_template("edit_student.html", form=form,
+                                   nr_matricol_error="\n Enter the correct nr_matricol!")
         elif len(form.type.data) == 0:
             return render_template("edit_student.html", form=form, type_length="\n Enter the type!")
         elif len(str(form.year.data)) == 0:
@@ -167,7 +191,9 @@ def edit_student():
         elif len(form.group.data) == 0:
             return render_template("edit_student.html", form=form, group_length="\n Enter the group!")
         else:
-            student_edit = studenti(name=student.name.data, password=student.password.data, nr_matricol=form.nr_matricol.data, type=form.type.data, year=form.year.data, group=form.group.data)
+            student_edit = studenti(name=student.name.data, password=student.password.data,
+                                    nr_matricol=form.nr_matricol.data, type=form.type.data, year=form.year.data,
+                                    group=form.group.data)
             db.session.add(student_edit)
             db.session.commit()
             return redirect(url_for('index'))
@@ -222,7 +248,6 @@ def upload_file():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
 
 
 if __name__ == "__main__":

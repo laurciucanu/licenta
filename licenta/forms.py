@@ -16,11 +16,14 @@ class LoginForm(FlaskForm):
 
 
 class StudentForm(FlaskForm):
+    username = StringField('Username')
     nr_matricol = StringField('Nr_matricol')
     type = StringField('Type')  # type of student (bachelor, master, Phd)
     year = IntegerField('Year')
     group = StringField('Group')
-    submit = SubmitField('Login')
+    password = PasswordField('Password')
+    confirm = PasswordField('Repeat Password')
+    submit = SubmitField('Register')
 
 
 class LaboratorForm(FlaskForm):
