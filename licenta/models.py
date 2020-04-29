@@ -14,7 +14,7 @@ class studenti(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(50), unique=False, nullable=False)
-    nr_matricol = db.Column(db.Integer, unique=False, nullable=True)
+    nr_matricol = db.Column(db.String(16), unique=True, nullable=True)
     type = db.Column(db.String(7), unique=False, nullable=True)
     year = db.Column(db.Integer, unique=False, nullable=True)
     group = db.Column(db.String(5), unique=False, nullable=True)

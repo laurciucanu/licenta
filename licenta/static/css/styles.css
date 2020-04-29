@@ -305,6 +305,11 @@ padding: 50px;
   margin: 20px auto;
   width: 300px;
 }
+
+.login-edit{
+  margin: 20px auto;
+  width: 360px;
+}
 .register{
   margin: 20px auto;
   width: 300px;
@@ -312,11 +317,22 @@ padding: 50px;
 .register-btn{
 
 }
+
 .login-screen {
   background-color: #FFF;
   padding: 20px;
   border-radius: 5px;
 }
+
+/*.login-screen-edit-student {*/
+/*  margin: 20px auto;*/
+/*  width: 300px;*/
+/*  background-color: #FFF;*/
+/*  padding: 20px;*/
+/*  border-radius: 5px;*/
+/*  width: 360px;*/
+/*}*/
+
 @media (max-width: 765px){
 .register{
   float: right;

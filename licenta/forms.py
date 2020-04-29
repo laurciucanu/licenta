@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, StringField, PasswordField, validators, SubmitField
+from wtforms import Form, StringField, PasswordField, validators, SubmitField, IntegerField
 
 
 class RegistrationForm(FlaskForm):
@@ -15,8 +15,15 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
+class StudentForm(FlaskForm):
+    nr_matricol = StringField('Nr_matricol')
+    type = StringField('Type')  # type of student (bachelor, master, Phd)
+    year = IntegerField('Year')
+    group = StringField('Group')
+    submit = SubmitField('Login')
+
+
 class LaboratorForm(FlaskForm):
     title = StringField('Title', [validators.Length(min=4, max=100)])
     content = StringField('Content', [validators.Length(min=4, max=500)])
     submit = SubmitField('Register laboratory content')
-

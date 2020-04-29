@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="static\css\styles.css" type="text/css">
+<script type="text/javascript" src="static\js\dropdownMenu.js"></script>
+
+{% from "_formhelpers.html" import render_field %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/register_laboratories">Laboratoare</a>
+      <a href="/note">Note</a>
+      <a href='/logout'>Logout</a>
+      <a href='/register_teacher'>Teacher Registration</a>
+      <a href="/register_student">Student Registration</a>
+      <a href="/upload">Homework upload</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer; color: #000000" onclick="openNav()">&#9776; Menu</span>
+
+<body class="body_student">
+
+<div class="login-edit">
+
+    <div class="login-screen">
+    <div class="login-form">
+        <div class="app-title">
+				<h1>Student Edit Profile</h1>
+        </div>
+
+<form method=POST>
+{{ form.hidden_tag() }}
+  <dl>
+      <div> {{ form.nr_matricol.label() }} </div>
+        {{ form.nr_matricol(class="control-group") }}
+
+       </br>
+
+      {% if error_format_nr_matricol %}
+            {{ error_format_nr_matricol }}
+        {% endif %}
+
+      {% if nr_matricol_error %}
+            {{ nr_matricol_error }}
+        {% endif %}
+
+        <div> {{ form.type.label() }} </div>
+              {{ form.type(class="control-group") }}
+
+       </br>
+                {% if type_length %}
+                    {{ type_length }}
+                {% endif %}
+
+   <div> {{ form.year.label() }} </div>
+              {{ form.year(class="control-group") }}
+
+       </br>
+                {% if year_length %}
+                    {{ year_length }}
+                {% endif %}
+
+      <div> {{ form.group.label() }} </div>
+              {{ form.group(class="control-group") }}
+
+       </br>
+                {% if group_length %}
+                    {{ group_length }}
+                {% endif %}
+
+
+  </dl>
+   {{ form.submit(class="btn")}}
+</form>
+      </div>
+
+{#      </div>#}
