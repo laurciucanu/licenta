@@ -4,22 +4,91 @@ from licenta import app, db
 from licenta.models import *
 from werkzeug.utils import secure_filename
 import os
+from functools import wraps
+import psycopg2
 
 
-@app.route('/')
-def home():
-    if not session.get('logged_in'):
-        return redirect(url_for('login_teacher'))
-    else:
-        return redirect(url_for('index'))
+class UserInfo(object):
+    def __init__(self, name, password):
+        self.name = name
+        self.password = password
+
+
+def auth_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+
+        # student = UserInfo(db_query("studenti"))
+        student = db_query("studenti")
+        # teacher = db_query("profesori")
+
+        for index in len(student):
+            # print(student_name, student_password)
+            if auth and auth.username == student[index] and auth.password == student.password:# or (auth.username == teacher_name and auth.password == teacher_password):
+                return f(*args, **kwargs)
+
+        return make_response('Could not verify your login!', 401, {'WWW-Authenticate': 'Basic realm="Login required"'})
+
+    return decorated
+
+
+# @app.route('/')
+# def home():
+#     if not session.get('logged_in'):
+#         return redirect(url_for('login_teacher'))
+#     else:
+#         return redirect(url_for('index'))
+
+
+def db_query(user):
+    connection = psycopg2.connect(user="postgres",
+                                  password="test123",
+                                  host="127.0.0.1",
+                                  port="5432",
+                                  database="licenta")
+
+    cursor = connection.cursor()
+    query = "select name, password from " + str(user)
+
+    cursor.execute(query)
+    user_records = cursor.fetchall()
+
+    list = UserInfo(None, None)
+
+    for row in user_records:
+        list.name = row[0]
+        list.password = row[1]
+
+        return list.name, list.password
+
+    # closing database connection.
+    if connection:
+        cursor.close()
+        connection.close()
+        print("PostgreSQL connection is closed")
+
+
+
+# @app.route('/')
+# def home():
+#     student_name, student_password = db_query("studenti")
+#     teacher_name, teacher_password = db_query("profesori")
+#
+#     if request.authorization and (student_name is not None and student_password is not None) and (request.authorization.username == student_name and request.authorization.password == student_password) or (request.authorization.username == teacher_name and request.authorization.password == teacher_password):
+#         return redirect(url_for('index'))
+#
+#     return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login required"'})
 
 
 @app.route("/index")
+# @auth_required
 def index():
     return render_template("index.html")
 
 
 @app.route("/type")
+# @auth_required
 def type():
     return render_template("type.html")
 
@@ -137,6 +206,7 @@ def logout():
 
 
 @app.route('/register_laboratories', methods=['GET', 'POST'])
+# @auth_required
 def register_laboratories():
     form = LaboratorForm(request.form)
 
@@ -166,33 +236,37 @@ def register_laboratories():
 
 
 @app.route("/note")
+# @auth_required
 def grade():
     return render_template("note.html")
 
 
 @app.route("/view_laboratories")
+# @auth_required
 def view_laboratories():
     query = db.session.execute("SELECT title,content FROM laborator;")
     return render_template("view_laboratories.html", laborator=query)
 
 
 @app.route("/view_cursuri")
+@auth_required
 def view_cursuri():
     query = db.session.execute("SELECT title, an, semestru  FROM cursuri;")
     return render_template("view_cursuri.html", cursuri=query)
 
 
 def allowed_file(filename):
-    ALLOWED_EXTENSIONS = set(['zip', 'rar', '7z'])
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    allowed_extensions = set(['zip', 'rar', '7z'])
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 
-@app.route('/upload')
-def upload_form():
-    return render_template('upload.html')
+# @app.route('/upload')
+# def upload_form():
+#     return render_template('upload.html')
 
 
-@app.route('/', methods=['POST'])
+@app.route('/upload', methods=['POST'])
+# @auth_required
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
@@ -221,6 +295,13 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     # Upload homework default path
+
+    print("Print MAIN", db_query("studenti"))
+    # for i in len(stud):
+    #     print(stud.name, stud.password)
+
+    # print(auth_required())
+    # print(db_query("profesori"))
     UPLOAD_FOLDER = 'D:/uploads'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
