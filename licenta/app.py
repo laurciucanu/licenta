@@ -31,12 +31,12 @@ import psycopg2
 #     return decorated
 
 
-# @app.route('/')
-# def home():
-#     if not session.get('logged_in'):
-#         return redirect(url_for('login_teacher'))
-#     else:
-#         return redirect(url_for('index'))
+@app.route('/')
+def home():
+    if not session.get('logged_in'):
+        return redirect(url_for('login_teacher'))
+    else:
+        return redirect(url_for('index'))
 
 
 # def db_query(user):
@@ -210,27 +210,30 @@ def logout():
 def register_laboratories():
     form = LaboratorForm(request.form)
 
-    if form.validate_on_submit():
-        if len(form.title.data) == 0:
-            return render_template("register_laboratories.html", form=form, empty_title="Enter a title!")
-        elif len(form.title.data) < 4 or len(form.title.data) > 100:
-            return render_template("register_laboratories.html", form=form,
-                                   format_title_error="Title must be between 4 and 100 characters!")
+    if session['logged_in']:
+        if form.validate_on_submit():
+            if len(form.title.data) == 0:
+                return render_template("register_laboratories.html", form=form, empty_title="Enter a title!")
+            elif len(form.title.data) < 4 or len(form.title.data) > 100:
+                return render_template("register_laboratories.html", form=form,
+                                       format_title_error="Title must be between 4 and 100 characters!")
 
-        exist_laborator = laborator.query.filter_by(title=form.title.data).first()
+            exist_laborator = laborator.query.filter_by(title=form.title.data).first()
 
-        if exist_laborator:
-            return render_template("register_laboratories.html", form=form, wrong_title="\n Enter another title!")
-        elif len(form.content.data) == 0:
-            return render_template("register_laboratories.html", form=form, empty_content="\n Enter some content!")
-        elif len(form.content.data) > 500:
-            return render_template("register_laboratories.html", form=form,
-                                   wrong_content="\n Enter maximum 500 characters!")
-        else:
-            laboratory = laborator(title=form.title.data, content=form.content.data)
-            db.session.add(laboratory)
-            db.session.commit()
-            return redirect(url_for('view_laboratories'))
+            if exist_laborator:
+                return render_template("register_laboratories.html", form=form, wrong_title="\n Enter another title!")
+            elif len(form.content.data) == 0:
+                return render_template("register_laboratories.html", form=form, empty_content="\n Enter some content!")
+            elif len(form.content.data) > 500:
+                return render_template("register_laboratories.html", form=form,
+                                       wrong_content="\n Enter maximum 500 characters!")
+            else:
+                laboratory = laborator(title=form.title.data, content=form.content.data)
+                db.session.add(laboratory)
+                db.session.commit()
+                return redirect(url_for('view_laboratories'))
+    else:
+        return redirect(url_for('login_required'))
 
     return render_template('register_laboratories.html', form=form)
 
@@ -244,15 +247,21 @@ def grade():
 @app.route("/view_laboratories")
 # @auth_required
 def view_laboratories():
-    query = db.session.execute("SELECT title,content FROM laborator;")
-    return render_template("view_laboratories.html", laborator=query)
+    if session['logged_in']:
+        query = db.session.execute("SELECT title,content FROM laborator;")
+        return render_template("view_laboratories.html", laborator=query)
+    else:
+        return redirect(url_for('login_required'))
 
 
 @app.route("/view_cursuri")
 # @auth_required
 def view_cursuri():
-    query = db.session.execute("SELECT title, an, semestru  FROM cursuri;")
-    return render_template("view_cursuri.html", cursuri=query)
+    if session['logged_in']:
+        query = db.session.execute("SELECT title, an, semestru  FROM cursuri;")
+        return render_template("view_cursuri.html", cursuri=query)
+    else:
+        return redirect(url_for('login_required'))
 
 
 def allowed_file(filename):
@@ -262,7 +271,10 @@ def allowed_file(filename):
 
 @app.route('/upload')
 def upload_form():
-    return render_template('upload.html')
+    if session['logged_in']:
+        return render_template('upload.html')
+    else:
+        return redirect(url_for('login_required'))
 
 
 @app.route('/', methods=['POST'])
@@ -290,6 +302,11 @@ def upload_file():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+
+@app.route('/login_required')
+def login_required():
+    return render_template('login_required.html')
 
 
 if __name__ == "__main__":
