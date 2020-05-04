@@ -311,28 +311,6 @@ def login_required():
 
 if __name__ == "__main__":
     # Upload homework default path
-
-    # print("Print MAIN", db_query("studenti"))
-    # for i in len(stud):
-    #     print(stud.name, stud.password)
-
-    # print(auth_required())
-    # print(db_query("profesori"))
-
-    # student_name, student_pass = db_query("studenti")
-    # list = db_query("studenti")
-    # # teacher = db_query("profesori")
-    # student_name = [x[0] for x in list]
-    # student_password = [x[1] for x in list]
-    # print("LIST: ", str(list) + "\n")
-    # print("len(list)", str(len(list)) + "\n")
-    #
-    # print("student_name: ", str(student_name) + "\n")
-    # print("len(student_name)", str(len(student_name)) + "\n")
-    #
-    # print("student_password: ", str(student_password) + "\n")
-    # print("len(student_password)", str(len(student_password)) + "\n")
-
     UPLOAD_FOLDER = 'D:/uploads'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
