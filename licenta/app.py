@@ -107,7 +107,8 @@ def register_teacher():
         elif form.password.data != form.confirm.data:
             return render_template("register_teacher.html", form=form, password_match="\n Passwords must match!")
         else:
-            profesor = profesori(name=form.username.data, password=form.password.data)
+            profesor = profesori(name=form.username.data)
+            profesor.set_password(form.password.data)
             db.session.add(profesor)
             db.session.commit()
             return redirect(url_for('login_teacher'))
@@ -124,7 +125,7 @@ def login_teacher():
         if not profesor:
             return render_template('login_teacher.html', form=form, wrong_username="Wrong username!")
 
-        if form.password.data == profesor.password:
+        if profesor.check_password(password=form.password.data):
             session['logged_in'] = True
             return render_template('index.html', name=form.username.data)
         else:
@@ -165,12 +166,12 @@ def register_student():
         elif form.password.data != form.confirm.data:
             return render_template("register_student.html", form=form, password_match="\n Passwords must match!")
         else:
-            student_entry = studenti(name=form.username.data, password=form.password.data,
-                                     nr_matricol=form.nr_matricol.data, type=form.type.data,
+            student_entry = studenti(name=form.username.data, nr_matricol=form.nr_matricol.data,
+                                     type=form.type.data,
                                      year=form.year.data,
                                      group=form.group.data)
 
-            student_entry.hash_password(password=form.password.data)
+            student_entry.set_password(form.password.data)
 
             db.session.add(student_entry)
             db.session.commit()
@@ -188,7 +189,7 @@ def login_student():
         if not student_entry:
             return render_template('login_student.html', form=form, wrong_username="Wrong username!")
 
-        if form.password.data == student_entry.password:
+        if student_entry.check_password(password=form.password.data):
             session['logged_in'] = True
             return render_template('index.html', name=form.username.data)
         else:
