@@ -1,8 +1,3 @@
-//
-// function myFunction() {
-//   document.getElementById("myDropdown").classList.toggle("show");
-// }
-
  // Clicking dropdown button will toggle display
 function btnToggle() {
     document.getElementById("mySidenav").classList.toggle("show");
@@ -26,24 +21,6 @@ window.onclick = function(event) {
     }
   }
 }
-
-// //side-nav test js
-// function SideNav() {
-//   document.getElementById("mySidenav").classList.toggle("show");
-// }
-//
-// window.onclick = function(event) {
-//   if (!event.target.matches('.dropbtn')) {
-//     var dropdowns = document.getElementsByClassName("dropdown-content");
-//     var i;
-//     for (i = 0; i < dropdowns.length; i++) {
-//       var openDropdown = dropdowns[i];
-//       if (openDropdown.classList.contains('show')) {
-//         openDropdown.classList.remove('show');
-//       }
-//     }
-//   }
-// }
 
 //
 //side-nav
