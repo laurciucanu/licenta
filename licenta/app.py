@@ -73,6 +73,10 @@ def login_teacher():
 @app.route('/register_student', methods=['GET', 'POST'])
 def register_student():
     form = StudentForm(request.form)
+    year = ['1', '2', '3']
+    type = ['Bachelor', 'Master', 'Phd']
+    group = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'E1', 'E2', 'E3', 'X1', 'X2', 'X3']
+
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
             return render_template("register_student.html", form=form,
@@ -89,12 +93,6 @@ def register_student():
         elif len(form.nr_matricol.data) != 16:
             return render_template("register_student.html", form=form,
                                    error_format_nr_matricol="Nr_matricol must have 16 characters!")
-        elif len(form.type.data) == 0:
-            return render_template("register_student.html", form=form, type_length="\n Enter the type!")
-        elif len(str(form.year.data)) == 0:
-            return render_template("register_student.html", form=form, year_length="\n Enter the year!")
-        elif len(form.group.data) == 0:
-            return render_template("register_student.html", form=form, group_length="\n Enter the group!")
         elif len(form.password.data) == 0:
             return render_template("register_student.html", form=form, password_len="\n Enter a password!")
         elif form.password.data != form.confirm.data:
@@ -111,7 +109,7 @@ def register_student():
             db.session.commit()
             return redirect(url_for('login_student'))
 
-    return render_template('register_student.html', form=form)
+    return render_template('register_student.html', form=form, year=year, type=type, group=group)
 
 
 @app.route('/login_student', methods=['GET', 'POST'])

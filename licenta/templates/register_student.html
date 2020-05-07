@@ -52,40 +52,33 @@
       {% if nr_matricol_error %}
             {{ nr_matricol_error }}
         {% endif %}
+
         </span>
 
         <div> {{ form.type.label() }} </div>
-              {{ form.type(class="control-group") }}
 
-       </br> <span style="color: red">
-                {% if type_length %}
-                    {{ type_length }}
-                {% endif %}
-             </span>
+             <select name="type" class="dropdown-type">
+                    {% for t in type %}
+                        <option value="{{ t }}">{{ t }}</option>
+                    {% endfor %}
+            </select>
 
-   <div> {{ form.year.label() }} </div>
-         {{ form.year(class="control-group") }}
+        <div> {{ form.year.label() }} </div>
 
-       </br>
-      <span style="color: red">
-                {% if year_length %}
-                    {{ year_length }}
-                {% endif %}
-      </span>
+        <select name="year" class="dropdown-select">
+            {% for y in year %}
+                <option value="{{ y }}">{{ y }}</option>
+            {% endfor %}
+        </select>
 
       <div> {{ form.group.label() }} </div>
-              {{ form.group(class="control-group") }}
+              <select name="group" class="dropdown-select">
+            {% for g in group %}
+                <option value="{{ g }}">{{ g }}</option>
+            {% endfor %}
+        </select>
 
-       </br>
-        <span style="color: red">
-            {% if group_length %}
-                {{ group_length }}
-            {% endif %}
-        </span>
-
-      <div>  {{ form.password.label() }}
-
-      </div>
+      <div>  {{ form.password.label() }} </div>
         {{ form.password(class="control-group") }}
       </br>
      <span style="color: red">
