@@ -324,10 +324,19 @@ padding: 50px;
 .body_error{
   height: 100%;
   font-family: Arial;
-  background: url("../images/3.jpg") no-repeat center;
+  color: white;
+  background: url("../images/404.PNG") no-repeat center;
   background-size: cover;
 }
 
+.homepage{
+  padding-top: 480px;
+  position: static;
+}
+
+.homepage-button{
+  background: url("../images/404.PNG") no-repeat center;
+}
 .login {
   margin: 20px auto;
   width: 300px;
@@ -442,6 +451,30 @@ box-shadow: none;
   margin: 0 auto;
 }
 
+.btn:hover {
+  background-color: #6db958;
+}
+
+.btn-homepage{
+  border: 2px solid transparent;
+  background: #0bdb00;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 3px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  width: 90px;
+  margin: 0 auto;
+}
+
+.btn-homepage:hover {
+  background-color: #6db958;
+}
+
 .input_upload{
   border: 2px solid transparent;
   background: #0bdb00;
@@ -458,6 +491,7 @@ box-shadow: none;
   width: 250px;
   margin: 0 auto;
 }
+
 .register-btn{
   border: 2px solid transparent;
   background: #dbd700;
@@ -477,10 +511,6 @@ box-shadow: none;
 
 .register-btn:hover{
   background-color: #b1b94f;
-}
-
-.btn:hover {
-  background-color: #6db958;
 }
 
 .login-link {

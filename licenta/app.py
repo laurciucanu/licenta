@@ -75,7 +75,8 @@ def register_student():
     form = StudentForm(request.form)
     year = ['1', '2', '3']
     type = ['Bachelor', 'Master', 'Phd']
-    group = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'E1', 'E2', 'E3', 'X1', 'X2', 'X3']
+    group = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'E1', 'E2', 'E3', 'X1',
+             'X2', 'X3']
 
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
@@ -123,7 +124,7 @@ def login_student():
 
         if student_entry.check_password(password=form.password.data):
             session['logged_in'] = True
-            return render_template('index.html', name=form.username.data)
+            return render_template('index.html', name=form.username.data, message="Logged in successfully!")
         else:
             return render_template('login_student.html', form=form, wrong_password="Wrong password!")
     else:
@@ -193,6 +194,7 @@ def view_cursuri():
         return redirect(url_for('login_required'))
 
 
+# The file extensions allowed for upload
 def allowed_file(filename):
     allowed_extensions = set(['zip', 'rar', '7z'])
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions

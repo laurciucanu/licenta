@@ -22,7 +22,6 @@ window.onclick = function(event) {
   }
 }
 
-//
 //side-nav
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
@@ -31,3 +30,15 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
+
+//Homepage redirect
+function pageRedirect() {
+      window.location.href = "/type";
+}
+
+//Login message
+ function MyAlert(){
+    alert("You are logged in!");
+ }
+document.getElementById("alertMessage").innerHTML = MyAlert();
+
