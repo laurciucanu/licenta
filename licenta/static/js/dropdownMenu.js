@@ -41,4 +41,3 @@ function pageRedirect() {
     alert("You are logged in!");
  }
 document.getElementById("alertMessage").innerHTML = MyAlert();
-

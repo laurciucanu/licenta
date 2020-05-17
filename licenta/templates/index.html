@@ -6,6 +6,7 @@
     <title>Main page</title>
     <link rel="stylesheet" type="text/css" href="static\css\styles.css" \>
     <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
+    <script type="text/javascript" src="static\js\modal.js"></script>
     {% from "_formhelpers.html" import render_field %}
 </head>
 <form method=get>
@@ -24,11 +25,27 @@
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
 <body>
 <div class="contentIndex">
-    <p></p>
-    <p></p>
+<button id="myBtn">Open Modal</button>
 
-    <p id="alertMessage"></p>
-    <script>alert("You are logged in as {{ name }}!");</script>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Modal Header</h2>
+    </div>
+    <div class="modal-body">
+      <p>Some text in the Modal Body</p>
+      <p>Some other text...</p>
+    </div>
+    <div class="modal-footer">
+      <h3>Modal Footer</h3>
+    </div>
+  </div>
+
+</div>
 
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in lectus est. Suspendisse ultricies pretium ultrices. Maecenas tristique ut nunc nec egestas. Praesent ac euismod mi, ut congue metus. Fusce nec egestas tortor. Vivamus porttitor efficitur sapien eget scelerisque. Integer lectus ante, posuere eget condimentum tempus, luctus euismod tortor. Nam ut convallis orci, eget sagittis sem. Pellentesque scelerisque, mi id consectetur hendrerit, augue eros dapibus arcu, quis imperdiet arcu dolor nec enim. Duis tincidunt tellus ex, non ornare risus pellentesque vel. Vestibulum scelerisque mattis mauris, at aliquam elit malesuada nec. Donec lacinia, augue sit amet ornare sollicitudin, felis purus dapibus tellus, id porttitor ex ligula in purus. Proin fermentum sem sem, non euismod erat imperdiet ut. Nullam sed cursus ex, at interdum quam.
 
