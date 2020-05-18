@@ -603,6 +603,7 @@ dd {
 
 /* Modal Content */
 .modal-content {
+  font-family: 'Lato';
   background-color: #fefefe;
   margin: auto;
   padding: 20px;

@@ -240,6 +240,16 @@ def login_required():
     return render_template('login_required.html')
 
 
+#Homework assig by the teacher
+@app.route('/assignHomework')
+def assign_homework():
+    form = LaboratorForm(request.form)
+    select_group = db.session.execute("SELECT \"group\" FROM studenti;")
+    select_homework = db.session.execute("SELECT title FROM laborator;")
+
+    return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
+
+
 if __name__ == "__main__":
     # Upload homework default path
     UPLOAD_FOLDER = 'D:/uploads'
