@@ -22,9 +22,10 @@ class studenti(db.Model):
     name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.VARCHAR(80), unique=False, nullable=False)
     nr_matricol = db.Column(db.String(16), unique=True, nullable=False)
-    type = db.Column(db.String(7), unique=False, nullable=False)
+    type = db.Column(db.String(9), unique=False, nullable=False)
     year = db.Column(db.Integer, unique=False, nullable=False)
     group = db.Column(db.String(5), unique=False, nullable=False)
+    # homeworks = db.Column(db.String(70), unique=False, nullable=True)
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')

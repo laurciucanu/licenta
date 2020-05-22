@@ -18,7 +18,7 @@ class LoginForm(FlaskForm):
 class StudentForm(FlaskForm):
     username = StringField('Username')
     nr_matricol = StringField('Nr_matricol')
-    type = StringField('Type')  # type of student (bachelor, master, Phd)
+    type = StringField('Type', [validators.Length(min=3, max=10)])  # type of student (bachelor, master, Phd)
     year = IntegerField('Year')
     group = StringField('Group')
     password = PasswordField('Password')
@@ -30,3 +30,8 @@ class LaboratorForm(FlaskForm):
     title = StringField('Title', [validators.Length(min=4, max=100)])
     content = StringField('Content', [validators.Length(min=4, max=500)])
     submit = SubmitField('Register laboratory content')
+
+#
+# class HomeworkAssignForm(FlaskForm):
+#     group = StringField('Group')
+#     title = StringField('Title', [validators.Length(min=4, max=100)])

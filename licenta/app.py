@@ -1,5 +1,5 @@
 from flask import flash, redirect, render_template, request, session, url_for, make_response
-from licenta.forms import RegistrationForm, LoginForm, LaboratorForm, StudentForm
+from licenta.forms import *
 from licenta import app, db
 from licenta.models import *
 from werkzeug.utils import secure_filename
@@ -74,7 +74,7 @@ def login_teacher():
 def register_student():
     form = StudentForm(request.form)
     year = ['1', '2', '3']
-    type = ['Bachelor', 'Master', 'Phd']
+    study_type = ['Bachelor', 'Master', 'Phd']
     group = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'E1', 'E2', 'E3', 'X1',
              'X2', 'X3']
 
@@ -110,7 +110,7 @@ def register_student():
             db.session.commit()
             return redirect(url_for('login_student'))
 
-    return render_template('register_student.html', form=form, year=year, type=type, group=group)
+    return render_template('register_student.html', form=form, year=year, type=study_type, group=group)
 
 
 @app.route('/login_student', methods=['GET', 'POST'])
@@ -243,6 +243,20 @@ def login_required():
 #Homework assig by the teacher
 @app.route('/assignHomework')
 def assign_homework():
+    # form = HomeworkAssignForm(request.form)
+    # select_group = db.session.execute("SELECT \"group\" FROM studenti;")
+    # select_homework = db.session.execute("SELECT title FROM laborator;")
+
+    # if session['logged_in']:
+    #     if form.validate_on_submit():
+    #         db.session.execute("INSERT INTO 'studenti'('homeworks') VALUES ('select_homework') WHERE \"group\" is 'select_homework'")
+    #         db.session.commit()
+    #         return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
+    # else:
+    #     return redirect(url_for('login_required'))
+
+    # return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
+
     form = LaboratorForm(request.form)
     select_group = db.session.execute("SELECT \"group\" FROM studenti;")
     select_homework = db.session.execute("SELECT title FROM laborator;")
