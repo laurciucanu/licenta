@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Homework assign</title>
@@ -21,11 +20,20 @@
 </div>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
-<form method=post>
-{#{{ form.hidden_tag() }}#}
+
 <body class="body_student">
+<form method="POST">
+{{ form.hidden_tag() }}
+
+        {% if form.errors %}
+        {{ form.errors }}
+        {% endif %}
 
         <center><p>Assign the homework:
+
+            {{ form.title.label() }}
+{#            {{ form.title(class="control-group") }}#}
+
         <select>
               {% for titleHomework in title %}
                   <option value="{{ titleHomework.title }}">{{  titleHomework.title }}</option>
@@ -33,6 +41,8 @@
         </select>
 
         to the group:
+
+        {{ form.group.label() }}
         <select>
           {% for item in group %}
               <option value="{{ item.group }}">{{ item.group }}</option>
@@ -41,8 +51,8 @@
         </p>
         </center>
 
-        <center><button type="button">Assign</button></center>
-{#  {{  form.submit(class="btn") }}#}
-</body>
+  {{  form.submit(class="btn") }}
+
 </form>
+</body>
 </html>

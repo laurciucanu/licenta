@@ -1,3 +1,5 @@
+from sqlalchemy import String
+
 from licenta import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -25,7 +27,7 @@ class studenti(db.Model):
     type = db.Column(db.String(9), unique=False, nullable=False)
     year = db.Column(db.Integer, unique=False, nullable=False)
     group = db.Column(db.String(5), unique=False, nullable=False)
-    # homeworks = db.Column(db.String(70), unique=False, nullable=True)
+    homeworks = db.Column(db.ARRAY(String), unique=False, nullable=True)
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
@@ -35,7 +37,7 @@ class studenti(db.Model):
 
     def __repr__(self):
         return f"\n Student_User: \n id: {self.id}\n name: {self.name}" \
-               f"\n nr_matricol: {self.nr_matricol}\n type: {self.type} \n year: {self.year}\n group: {self.group} \n"
+               f"\n nr_matricol: {self.nr_matricol}\n type: {self.type} \n year: {self.year}\n group: {self.group} \n homeworks: {self.homeworks} \n"
 
 
 class laborator(db.Model):
