@@ -1,8 +1,6 @@
-from flask import flash, redirect, render_template, request, session, url_for, make_response
-from sqlalchemy import text
-
+from flask import flash, redirect, render_template, request, session, url_for
 from licenta.forms import *
-from licenta import app, db, models
+from licenta import app, models
 from licenta.models import *
 from werkzeug.utils import secure_filename
 import os
@@ -198,7 +196,7 @@ def view_cursuri():
 
 # The file extensions allowed for upload
 def allowed_file(filename):
-    allowed_extensions = set(['zip', 'rar', '7z'])
+    allowed_extensions = {'zip', 'rar', '7z'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 
@@ -233,7 +231,7 @@ def upload_file():
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found():
     return render_template('404.html'), 404
 
 
@@ -242,7 +240,7 @@ def login_required():
     return render_template('login_required.html')
 
 
-#Homework assig by the teacher
+# Homework assig by the teacher
 @app.route('/assignHomework', methods=['GET', 'POST'])
 def assign_homework():
     form = HomeworkAssignForm(request.form)
@@ -277,10 +275,9 @@ def assign_homework():
                 db.session.add(item)
                 db.session.commit()
 
+            # delete me
             # u = text('UPDATE studenti SET homeworks = :q WHERE group = :id')
             # db.session.execute(u, q=['tema1', 'tema2'], id='A1')
-
-
 
             print("Homework added!")
             # return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
