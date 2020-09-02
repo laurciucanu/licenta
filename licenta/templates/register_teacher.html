@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="static\css\styles.css" type="text/css">
 <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
 
@@ -36,8 +37,10 @@
             {{ error_format_username }}
         {% endif %}
 
+      <div class="container">
       <div>  {{ form.password.label() }} </div>
         {{ form.password(class="control-group") }}
+      <i class="far fa-eye" id="togglePassword"></i>
 
       </br>{% if password_len %}
             {{ password_len }}
@@ -45,15 +48,16 @@
 
         <div> {{ form.confirm.label() }} </div>
         {{ form.confirm(class="control-group") }}
-
-        </br>
+        <i class="far fa-eye" id="togglePassword"></i>
+          </br>
             {% if password_match %}
             {{ password_match }}
         {% endif %}
+      </div>
   </dl>
   {{  form.submit(class="btn") }}
 </form>
     </div>
-
+<script type="text/javascript" src="static\js\passwordField.js"></script>
 </div>
 </div>

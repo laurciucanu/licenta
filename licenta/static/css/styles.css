@@ -404,6 +404,11 @@ text-align: center;
     margin-bottom: 20px;
 }
 
+.container i {
+    margin-left: -30px;
+    cursor: pointer;
+}
+
 input {
     text-align: center;
     background-color: #ECF0F1;
@@ -576,10 +581,10 @@ dd {
   z-index: 2;
 }
 
-.container{
-  padding-top:50px;
-  margin: auto;
-}
+/*.container{*/
+/*  padding-top:50px;*/
+/*  margin: auto;*/
+/*}*/
 
 .username{
   font-size: 21px;
