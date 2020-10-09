@@ -16,11 +16,11 @@ def home():
 
 @app.route("/index")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", token="Licenta")
 
 
 @app.route("/type")
-def type():
+def user_type():
     return render_template("type.html")
 
 

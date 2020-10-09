@@ -45,7 +45,8 @@
       </br>{% if password_len %}
             {{ password_len }}
         {% endif %}
-
+      </div>
+        <div class="container">
         <div> {{ form.confirm.label() }} </div>
         {{ form.confirm(class="control-group") }}
         <i class="far fa-eye" id="togglePassword"></i>
