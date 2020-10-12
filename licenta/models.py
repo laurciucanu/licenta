@@ -1,4 +1,5 @@
-from sqlalchemy import String
+from sqlalchemy import String, ARRAY
+from sqlalchemy.ext.mutable import MutableList
 
 from licenta import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -27,7 +28,7 @@ class studenti(db.Model):
     type = db.Column(db.String(9), unique=False, nullable=False)
     year = db.Column(db.Integer, unique=False, nullable=False)
     group = db.Column(db.String(5), unique=False, nullable=False)
-    homeworks = db.Column(db.ARRAY(String), unique=False, nullable=True)
+    homeworks = db.Column(MutableList.as_mutable(ARRAY(db.String)), unique=False, nullable=True)
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')

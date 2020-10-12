@@ -1,5 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, StringField, PasswordField, validators, SubmitField, IntegerField, FieldList
+from wtforms import StringField, PasswordField, validators, SubmitField, IntegerField, FieldList
+from wtforms_alchemy import ModelFieldList, ModelFormMeta
+from wtforms.fields import FormField
+from sqlalchemy.orm import relationship
+from licenta import db
 
 
 class RegistrationForm(FlaskForm):
@@ -16,6 +20,7 @@ class LoginForm(FlaskForm):
 
 
 class StudentForm(FlaskForm):
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     username = StringField('Username')
     nr_matricol = StringField('Nr_matricol')
     type = StringField('Type', [validators.Length(min=3, max=10)])  # type of student (bachelor, master, Phd)
@@ -28,13 +33,27 @@ class StudentForm(FlaskForm):
 
 
 class LaboratorForm(FlaskForm):
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = StringField('Title', [validators.Length(min=4, max=100)])
     content = StringField('Content', [validators.Length(min=4, max=500)])
+    homework_id = db.Column(db.Integer, db.ForeignKey(StudentForm.id))
+    homework = relationship(StudentForm, backref='Students')  # the event needs to have this
     submit = SubmitField('Register laboratory content')
+
+
+class Student(ModelFormMeta):
+    class Meta:
+        model = StudentForm
+
+
+class Laborator(ModelFormMeta):
+    class Meta:
+        model = LaboratorForm
+
+    Students = ModelFieldList(FormField(StudentForm))
 
 
 class HomeworkAssignForm(FlaskForm):
     group = StringField('Group')
     title = StringField('Title', [validators.Length(min=0, max=100)])
     submit = SubmitField('Assign homework')
-

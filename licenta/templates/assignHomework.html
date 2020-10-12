@@ -34,7 +34,7 @@
             {{ form.title.label() }}
 {#            {{ form.title(class="control-group") }}#}
 
-        <select>
+        <select name="title">
               {% for titleHomework in title %}
                   <option value="{{ titleHomework.title }}">{{  titleHomework.title }}</option>
               {% endfor %}
@@ -43,7 +43,7 @@
         to the group:
 
         {{ form.group.label() }}
-        <select>
+        <select name="group">
           {% for item in group %}
               <option value="{{ item.group }}">{{ item.group }}</option>
           {% endfor %}

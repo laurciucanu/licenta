@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, request, session, url_for
+from sqlalchemy.orm.attributes import flag_modified
 from licenta.forms import *
 from licenta import app, models
 from licenta.models import *
@@ -16,7 +17,8 @@ def home():
 
 @app.route("/index")
 def index():
-    return render_template("index2.html", token="Licenta")
+    # return render_template("index2.html", token="Licenta")
+    return render_template("index.html")
 
 
 @app.route("/type")
@@ -141,7 +143,7 @@ def logout():
 
 @app.route('/register_laboratories', methods=['GET', 'POST'])
 def register_laboratories():
-    form = LaboratorForm(request.form)
+    form = LaboratorForm(request.form, csrf=False)
 
     if session['logged_in']:
         if form.validate_on_submit():
@@ -243,7 +245,7 @@ def login_required():
 # Homework assig by the teacher
 @app.route('/assignHomework', methods=['GET', 'POST'])
 def assign_homework():
-    form = HomeworkAssignForm(request.form)
+    form = HomeworkAssignForm(request.form, csrf=False)
     select_group = db.session.execute("SELECT \"group\" FROM studenti;")
     select_homework = db.session.execute("SELECT title FROM laborator;")
 
@@ -251,52 +253,27 @@ def assign_homework():
         if form.validate_on_submit():
             homework_title = request.form.get('title')
             homework_group = request.form.get('group')
-            myCurrentHomework = db.session.execute("SELECT homeworks FROM studenti where \"group\" = 'A1';")
-            myList = [myCurrentHomework]
+            allStudents = db.session.query(models.studenti).filter_by(group=homework_group).all()
 
-            # db.session.execute("INSERT INTO studenti(homeworks) VALUES (%s) WHERE \"group\" is (%s);", ('tema1', 'A1'))
-            # db.session.execute("INSERT INTO studenti(homeworks) VALUES homework_title")
-
-            #
-            # db.session.query(models.studenti).filter_by(group='A1').update({
-            #     'homeworks': ['tema1']
-            # })
-
-            allStudenti = db.session.query(models.studenti).filter_by(group='A1').all()
-
-            for item in allStudenti:
-                currentHomework = item.homeworks
-                if currentHomework is None:
-                    currentHomework = ['tema1']
+            for item in allStudents:
+                if item.homeworks is None:
+                    newHomework = [homework_title]
+                    item.homeworks = newHomework
                 else:
-                    # currentHomework = currentHomework.append('tema10123kjlh123uikgui123')
-                    item.homeworks.append('temaasdjkbhasdkbhj')
+                    item.homeworks.append(homework_title)
 
                 db.session.add(item)
                 db.session.commit()
 
-            # delete me
-            # u = text('UPDATE studenti SET homeworks = :q WHERE group = :id')
-            # db.session.execute(u, q=['tema1', 'tema2'], id='A1')
-
             print("Homework added!")
-            # return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
             return redirect(url_for('index'))
         else:
-            print("aici")
+            print("Form validation FAILED!")
 
     else:
         return redirect(url_for('login_required'))
 
     return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
-
-    # return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
-
-    # form = LaboratorForm(request.form)
-    # select_group = db.session.execute("SELECT \"group\" FROM studenti;")
-    # select_homework = db.session.execute("SELECT title FROM laborator;")
-
-    # return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
 
 
 if __name__ == "__main__":
