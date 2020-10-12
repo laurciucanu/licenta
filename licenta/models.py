@@ -1,14 +1,18 @@
-from sqlalchemy import String, ARRAY
+from flask_login import UserMixin
+from sqlalchemy import ARRAY
 from sqlalchemy.ext.mutable import MutableList
-
 from licenta import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class profesori(db.Model):
+class profesori(db.Model, UserMixin):
+    __tablename__ = 'profesori'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.VARCHAR(80), unique=False, nullable=False)
+
+    # Define the relationship to Role via UserRoles
+    role = db.relationship('Role', secondary='user_roles')
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
@@ -20,7 +24,8 @@ class profesori(db.Model):
         return f"\n Professor_User: \n id: {self.id}\n name: {self.name} \n"
 
 
-class studenti(db.Model):
+class studenti(db.Model, UserMixin):
+    __tablename__ = 'studenti'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.VARCHAR(80), unique=False, nullable=False)
@@ -29,6 +34,8 @@ class studenti(db.Model):
     year = db.Column(db.Integer, unique=False, nullable=False)
     group = db.Column(db.String(5), unique=False, nullable=False)
     homeworks = db.Column(MutableList.as_mutable(ARRAY(db.String)), unique=False, nullable=True)
+    # Define the relationship to Role via UserRoles
+    # role = db.relationship('Role', secondary='user_roles')
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
@@ -67,3 +74,18 @@ class cursuri(db.Model):
 
     def __repr__(self):
         return f"\nCurs: \n id: {self.id}\n title: {self.title} \n an: {self.an}\n semestru: {self.semestru}\n"
+
+
+# Define the Role data-model
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+
+# Define the UserRoles association table
+class UserRoles(db.Model):
+    __tablename__ = 'user_roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('profesori.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))

@@ -10,6 +10,7 @@ class RegistrationForm(FlaskForm):
     username = StringField('Username')
     password = PasswordField('New Password')
     confirm = PasswordField('Repeat Password')
+    role = StringField('Role')
     submit = SubmitField('Register')
 
 
@@ -29,6 +30,7 @@ class StudentForm(FlaskForm):
     password = PasswordField('Password')
     confirm = PasswordField('Repeat Password')
     homeworks = FieldList(StringField('Homeworks'), min_entries=0, max_entries=300)
+    role = StringField('Role')
     submit = SubmitField('Register')
 
 

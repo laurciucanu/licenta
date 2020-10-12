@@ -1,10 +1,21 @@
 from flask import flash, redirect, render_template, request, session, url_for
-from sqlalchemy.orm.attributes import flag_modified
+from flask_user import roles_required
+from flask_user.tests.tst_app import User
+
 from licenta.forms import *
 from licenta import app, models
 from licenta.models import *
 from werkzeug.utils import secure_filename
 import os
+from flask_login import LoginManager
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user):
+    return User.get(user)
 
 
 @app.route('/')
@@ -17,7 +28,6 @@ def home():
 
 @app.route("/index")
 def index():
-    # return render_template("index2.html", token="Licenta")
     return render_template("index.html")
 
 
@@ -44,6 +54,7 @@ def register_teacher():
             return render_template("register_teacher.html", form=form, password_match="\n Passwords must match!")
         else:
             profesor = profesori(name=form.username.data)
+            profesori.role = 'profesor'
             profesor.set_password(form.password.data)
             db.session.add(profesor)
             db.session.commit()
@@ -85,7 +96,7 @@ def register_student():
             return render_template("register_student.html", form=form,
                                    error_format_username="Username must be between 4 and 20 chars!")
 
-        exist_student = studenti.query.filter_by(name=form.username.data).first()
+        exist_student = studenti.query.filter_by(name=form.username.data).all()
         exist_nr_matricol = studenti.query.filter_by(nr_matricol=form.nr_matricol.data).first()
 
         if exist_student:
@@ -242,8 +253,9 @@ def login_required():
     return render_template('login_required.html')
 
 
-# Homework assig by the teacher
+# Homework assign by the teacher
 @app.route('/assignHomework', methods=['GET', 'POST'])
+@roles_required('profesor')
 def assign_homework():
     form = HomeworkAssignForm(request.form, csrf=False)
     select_group = db.session.execute("SELECT \"group\" FROM studenti;")
