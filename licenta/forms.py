@@ -1,10 +1,11 @@
+from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, validators, SubmitField, IntegerField, FieldList
-from wtforms_alchemy import ModelFieldList, ModelFormMeta
-from wtforms.fields import FormField
 from sqlalchemy.orm import relationship
-from licenta import db
+from wtforms import StringField, PasswordField, validators, SubmitField, IntegerField, FieldList
+from wtforms.fields import FormField
+from wtforms_alchemy import ModelFieldList, ModelFormMeta
 
+db = SQLAlchemy()
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username')
@@ -38,6 +39,8 @@ class LaboratorForm(FlaskForm):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = StringField('Title', [validators.Length(min=4, max=100)])
     content = StringField('Content', [validators.Length(min=4, max=500)])
+    year = IntegerField('Year')
+    group = StringField('Group')
     homework_id = db.Column(db.Integer, db.ForeignKey(StudentForm.id))
     homework = relationship(StudentForm, backref='Students')  # the event needs to have this
     submit = SubmitField('Register laboratory content')

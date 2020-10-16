@@ -53,8 +53,30 @@
             {{ wrong_content }}
         {% endif %}
 
-{#  </dl>#}
-  {{  form.submit(class="btn") }}
+        <div> {{ form.year.label() }} </div>
+
+             <select name="year" class="dropdown-select">
+                    {% for y in year %}
+                        <option value="{{ y }}">{{ y }}</option>
+                     {% endfor %}
+             </select>
+
+        {% if empty_year %}
+            {{ empty_year }}
+        {% endif %}
+
+        <div> {{ form.group.label() }} </div>
+             <select name="group" class="dropdown-select">
+                    {% for g in group %}
+                        <option value="{{ g }}">{{ g }}</option>
+                    {% endfor %}
+              </select>
+
+        {% if empty_group %}
+            {{ empty_group }}
+        {% endif %}
+
+        {{  form.submit(class="btn") }}
 </form>
     </div>
     </div>

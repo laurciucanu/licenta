@@ -1,17 +1,12 @@
-from flask import flash, redirect, render_template, request, session, url_for
-from flask_user import roles_required
-from flask_user.tests.tst_app import User
-
-from licenta.forms import *
-from licenta import app, models
-from licenta.models import *
-from werkzeug.utils import secure_filename
 import os
-from flask_login import LoginManager
+from flask import flash, redirect, render_template, request, session, url_for
+from flask_user.tests.tst_app import User
+from werkzeug.utils import secure_filename
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+from licenta import login_manager, app, models
+from licenta.forms import *
+from licenta.models import profesori, studenti, laborator
+
 
 @login_manager.user_loader
 def load_user(user):
@@ -155,6 +150,9 @@ def logout():
 @app.route('/register_laboratories', methods=['GET', 'POST'])
 def register_laboratories():
     form = LaboratorForm(request.form, csrf=False)
+    year = ['1', '2', '3']
+    group = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'E1', 'E2', 'E3', 'X1',
+             'X2', 'X3']
 
     if session['logged_in']:
         if form.validate_on_submit():
@@ -173,8 +171,12 @@ def register_laboratories():
             elif len(form.content.data) > 500:
                 return render_template("register_laboratories.html", form=form,
                                        wrong_content="\n Enter maximum 500 characters!")
+            elif len(form.year.data) == 0:
+                return render_template("register_laboratories.html", form=form, empty_year="\n Enter the year!")
+            elif len(form.group.data) == 0:
+                return render_template("register_laboratories.html", form=form, empty_group="\n Enter the group!")
             else:
-                laboratory = laborator(title=form.title.data, content=form.content.data)
+                laboratory = laborator(form=form, title=form.title.data, content=form.content.data, year=form.year.data, group=form.group.data)
                 db.session.add(laboratory)
                 db.session.commit()
                 return redirect(url_for('view_laboratories'))
@@ -255,11 +257,11 @@ def login_required():
 
 # Homework assign by the teacher
 @app.route('/assignHomework', methods=['GET', 'POST'])
-@roles_required('profesor')
+# @roles_required('profesor')
 def assign_homework():
     form = HomeworkAssignForm(request.form, csrf=False)
-    select_group = db.session.execute("SELECT \"group\" FROM studenti;")
-    select_homework = db.session.execute("SELECT title FROM laborator;")
+    select_group = db.session.execute("SELECT DISTINCT \"group\" FROM studenti;")
+    select_homework = db.session.execute("SELECT DISTINCT title FROM laborator;")
 
     if session['logged_in']:
         if form.validate_on_submit():
@@ -286,6 +288,16 @@ def assign_homework():
         return redirect(url_for('login_required'))
 
     return render_template('assignHomework.html', group=select_group, title=select_homework, form=form)
+
+
+@app.route('/homeworks', methods=['GET'])
+def homeworks():
+    if session['logged_in']:
+        query = db.session.execute("SELECT title,content FROM laborator"
+                                   "JOIN studenti on ;")
+        return render_template("view_laboratories.html", laborator=query)
+    else:
+        return redirect(url_for('login_required'))
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 from flask_login import UserMixin
 from sqlalchemy import ARRAY
 from sqlalchemy.ext.mutable import MutableList
-from licenta import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from licenta.forms import db
 
 
 class profesori(db.Model, UserMixin):
@@ -45,16 +45,21 @@ class studenti(db.Model, UserMixin):
 
     def __repr__(self):
         return f"\n Student_User: \n id: {self.id}\n name: {self.name}" \
-               f"\n nr_matricol: {self.nr_matricol}\n type: {self.type} \n year: {self.year}\n group: {self.group} \n homeworks: {self.homeworks} \n"
+               f"\n nr_matricol: {self.nr_matricol}\n type: {self.type} \n year: {self.year}\n group: {self.group}" \
+               f"\n homeworks: {self.homeworks} \n "
 
 
 class laborator(db.Model):
+    __tablename__ = 'laborator'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(70), unique=True, nullable=False)
     content = db.Column(db.String(500), unique=False, nullable=False)
+    year = db.Column(db.Integer, unique=False, nullable=False)
+    group = db.Column(db.String(5), unique=False, nullable=False)
 
     def __repr__(self):
-        return f"\nLaborator: \n id: {self.id}\n title: {self.title} \n content: {self.content}\n"
+        return f"\n Laborator: \n id: {self.id}\n title: {self.title} \n content: {self.content}\n year: {self.year}" \
+               f"\n group: {self.group} \n"
 
 
 class grade(db.Model):
