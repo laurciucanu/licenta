@@ -171,19 +171,20 @@ def register_laboratories():
             elif len(form.content.data) > 500:
                 return render_template("register_laboratories.html", form=form,
                                        wrong_content="\n Enter maximum 500 characters!")
-            elif len(form.year.data) == 0:
+            elif len(str(form.year.data)) == 0:
                 return render_template("register_laboratories.html", form=form, empty_year="\n Enter the year!")
             elif len(form.group.data) == 0:
                 return render_template("register_laboratories.html", form=form, empty_group="\n Enter the group!")
             else:
-                laboratory = laborator(form=form, title=form.title.data, content=form.content.data, year=form.year.data, group=form.group.data)
+                laboratory = laborator(title=form.title.data, content=form.content.data, year=form.year.data, group=form.group.data)
                 db.session.add(laboratory)
                 db.session.commit()
+                print("Laboratory added!")
                 return redirect(url_for('view_laboratories'))
     else:
         return redirect(url_for('login_required'))
 
-    return render_template('register_laboratories.html', form=form)
+    return render_template('register_laboratories.html', form=form, year=year, group=group)
 
 
 @app.route("/note")
@@ -194,7 +195,7 @@ def grade():
 @app.route("/view_laboratories")
 def view_laboratories():
     if session['logged_in']:
-        query = db.session.execute("SELECT title,content FROM laborator;")
+        query = db.session.execute("SELECT title,content, year, \"group\" FROM laborator;")
         return render_template("view_laboratories.html", laborator=query)
     else:
         return redirect(url_for('login_required'))
@@ -293,8 +294,7 @@ def assign_homework():
 @app.route('/homeworks', methods=['GET'])
 def homeworks():
     if session['logged_in']:
-        query = db.session.execute("SELECT title,content FROM laborator"
-                                   "JOIN studenti on ;")
+        query = db.session.execute("SELECT title,content, year,\"group\" FROM laborator;")
         return render_template("view_laboratories.html", laborator=query)
     else:
         return redirect(url_for('login_required'))

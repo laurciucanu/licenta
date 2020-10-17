@@ -24,12 +24,16 @@
             <tr>
                 <th>Title</th>
                 <th>Content</th>
+                <th>Year</th>
+                <th>Group</th>
             </tr>
     {% for labItem in laborator %}
 
             <tr>
                 <td> {{ labItem.title  }}</td>
                 <td> {{ labItem.content  }}</td>
+                <td> {{ labItem.year  }}</td>
+                <td> {{ labItem.group  }}</td>
             </tr>
 
     {% endfor %}

@@ -23,11 +23,16 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="31212485-9504-4823-ad03-3a22d0ae9bdd">
+        <schema name="pg_catalog" object-types="function, view, table" />
+        <schema name="public" object-types="function, view, table" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="31212485-9504-4823-ad03-3a22d0ae9bdd">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[select * from laborator]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -61,11 +66,11 @@
     <connections>
       <connection id="31212485-9504-4823-ad03-3a22d0ae9bdd" active="true">
         <database>
-          <name value="Connection" />
+          <name value="licenta" />
           <description value="" />
           <database-type value="POSTGRES" />
           <config-type value="BASIC" />
-          <database-version value="9999.0" />
+          <database-version value="11.1" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
@@ -74,8 +79,8 @@
           <port value="5432" />
           <database value="postgres" />
           <type value="USER_PASSWORD" />
-          <user value="test123" />
-          <deprecated-pwd value="YWRtaW4=" />
+          <user value="postgres" />
+          <deprecated-pwd value="dGVzdDEyMw==" />
         </database>
         <properties>
           <auto-commit value="false" />

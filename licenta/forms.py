@@ -41,8 +41,8 @@ class LaboratorForm(FlaskForm):
     content = StringField('Content', [validators.Length(min=4, max=500)])
     year = IntegerField('Year')
     group = StringField('Group')
-    homework_id = db.Column(db.Integer, db.ForeignKey(StudentForm.id))
-    homework = relationship(StudentForm, backref='Students')  # the event needs to have this
+    # homework_id = db.Column(db.Integer, db.ForeignKey(StudentForm.id))
+    # homework = relationship(StudentForm, backref='Students')  # the event needs to have this
     submit = SubmitField('Register laboratory content')
 
 
