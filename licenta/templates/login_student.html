@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="static\css\styles.css" type="text/css">
 <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
+<script src="static\js\jquery.min.js"></script>
+<script src="static\js\bootstrap.min.js"></script>
 
 {% from "_formhelpers.html" import render_field %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,9 +18,16 @@
 </div>
 
 <span style="font-size:30px;cursor:pointer; color: #000000" onclick="openNav()">&#9776; Menu</span>
+<head>
+    <script>
+        //Modal for login message
+        $(document).ready(function(){
+            $("#myModal").modal('show');
+        });
+    </script>
+</head>
 
 <body class="body_student">
-{#<img src="static\images\3.jpg">#}
 
 <div class="login">
 
@@ -30,6 +39,18 @@
 <form method=POST>
 {{ form.hidden_tag() }}
   <dl>
+        <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <center><p>Your account {{ name }} is registered successfully!</p></center>
+  </div>
+
+</div>
+<script type="text/javascript" src="static\js\modal.js"></script>
+
       {% if form.username.errors %}
             {{ form.username(class="control-group is-invalid")}}
         <div class="invalid-feedback">

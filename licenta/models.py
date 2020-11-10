@@ -14,6 +14,14 @@ class profesori(db.Model, UserMixin):
     # Define the relationship to Role via UserRoles
     role = db.relationship('Role', secondary='user_roles')
 
+    #TODO add encryption to username
+
+    # def set_username(self, name):
+    #     self.password = generate_password_hash(name, method='sha256')
+    #
+    # def check_username(self, name):
+    #     return check_password_hash(self.name, name)
+
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
 

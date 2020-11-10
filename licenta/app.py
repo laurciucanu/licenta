@@ -51,11 +51,12 @@ def register_teacher():
             profesor = profesori(name=form.username.data)
             profesori.role = 'profesor'
             profesor.set_password(form.password.data)
+            print(form.username.data)
             db.session.add(profesor)
             db.session.commit()
-            return redirect(url_for('login_teacher'))
+            return redirect(url_for('login_teacher', name=form.username.data))
 
-    return render_template('register_teacher.html', form=form)
+    return render_template('register_teacher.html', form=form, name=form.username.data)
 
 
 @app.route('/login_teacher', methods=['GET', 'POST'])
@@ -69,6 +70,7 @@ def login_teacher():
 
         if profesor.check_password(password=form.password.data):
             session['logged_in'] = True
+            flash("Logged in!")
             return render_template('index.html', name=form.username.data)
         else:
             return render_template('login_teacher.html', form=form, wrong_password="Wrong password!")
@@ -116,7 +118,7 @@ def register_student():
 
             db.session.add(student_entry)
             db.session.commit()
-            return redirect(url_for('login_student'))
+            return redirect(url_for('login_student', name=form.username.data))
 
     return render_template('register_student.html', form=form, year=year, type=study_type, group=group)
 
