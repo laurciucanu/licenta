@@ -8,6 +8,7 @@ from licenta.forms import db
 class profesori(db.Model, UserMixin):
     __tablename__ = 'profesori'
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(60), unique=True, nullable=False)
     name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.VARCHAR(80), unique=False, nullable=False)
 
@@ -29,12 +30,13 @@ class profesori(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f"\n Professor_User: \n id: {self.id}\n name: {self.name} \n"
+        return f"\n Professor_User: \n id: {self.id}\n email: {self.email} \n name: {self.name} \n"
 
 
 class studenti(db.Model, UserMixin):
     __tablename__ = 'studenti'
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(60), unique=True, nullable=False)
     name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.VARCHAR(80), unique=False, nullable=False)
     nr_matricol = db.Column(db.String(16), unique=True, nullable=False)
@@ -52,7 +54,7 @@ class studenti(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f"\n Student_User: \n id: {self.id}\n name: {self.name}" \
+        return f"\n Student_User: \n id: {self.id}\n email: {self.email} \n name: {self.name}" \
                f"\n nr_matricol: {self.nr_matricol}\n type: {self.type} \n year: {self.year}\n group: {self.group}" \
                f"\n homeworks: {self.homeworks} \n "
 

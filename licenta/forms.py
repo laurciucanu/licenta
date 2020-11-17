@@ -7,7 +7,8 @@ from wtforms_alchemy import ModelFieldList, ModelFormMeta
 
 db = SQLAlchemy()
 
-class RegistrationForm(FlaskForm):
+class TeacherForm(FlaskForm):
+    email = StringField('Email')
     username = StringField('Username')
     password = PasswordField('New Password')
     confirm = PasswordField('Repeat Password')
@@ -23,6 +24,7 @@ class LoginForm(FlaskForm):
 
 class StudentForm(FlaskForm):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    email = StringField('Email')
     username = StringField('Username')
     nr_matricol = StringField('Nr_matricol')
     type = StringField('Type', [validators.Length(min=3, max=10)])  # type of student (bachelor, master, Phd)

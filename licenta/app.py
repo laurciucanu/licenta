@@ -2,7 +2,7 @@ import os
 from flask import flash, redirect, render_template, request, session, url_for
 from flask_user.tests.tst_app import User
 from werkzeug.utils import secure_filename
-
+from validate_email import validate_email
 from licenta import login_manager, app, models
 from licenta.forms import *
 from licenta.models import profesori, studenti, laborator
@@ -33,7 +33,7 @@ def user_type():
 
 @app.route('/register_teacher', methods=['GET', 'POST'])
 def register_teacher():
-    form = RegistrationForm(request.form)
+    form = TeacherForm(request.form)
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
             return render_template("register_teacher.html", form=form,
@@ -43,12 +43,16 @@ def register_teacher():
 
         if exist_profesor:
             return render_template("register_teacher.html", form=form, error_msg="\n Enter another name!")
+        elif len(form.email.data) == 0:
+            return render_template("register_teacher.html", form=form, email_len="\n Enter an email address!")
+        elif validate_email(form.email.data) is False:
+            return render_template("register_teacher.html", form=form, email_invalid="\n Enter a correct email address!")
         elif len(form.password.data) == 0:
             return render_template("register_teacher.html", form=form, password_len="\n Enter a password!")
         elif form.password.data != form.confirm.data:
             return render_template("register_teacher.html", form=form, password_match="\n Passwords must match!")
         else:
-            profesor = profesori(name=form.username.data)
+            profesor = profesori(name=form.username.data, email=form.email.data)
             profesori.role = 'profesor'
             profesor.set_password(form.password.data)
             print(form.username.data)
@@ -98,6 +102,10 @@ def register_student():
 
         if exist_student:
             return render_template("register_student.html", form=form, error_msg="\n Enter another name!")
+        elif len(form.email.data) == 0:
+            return render_template("register_student.html", form=form, email_len="\n Enter an email address!")
+        elif validate_email(form.email.data) is False:
+            return render_template("register_student.html", form=form, email_invalid="\n Enter a correct email address!")
         elif exist_nr_matricol:
             return render_template("register_student.html", form=form,
                                    nr_matricol_error="\n This nr_matricol is already registered!")
@@ -109,7 +117,9 @@ def register_student():
         elif form.password.data != form.confirm.data:
             return render_template("register_student.html", form=form, password_match="\n Passwords must match!")
         else:
-            student_entry = studenti(name=form.username.data, nr_matricol=form.nr_matricol.data,
+            student_entry = studenti(email=form.email.data,
+                                     name=form.username.data,
+                                     nr_matricol=form.nr_matricol.data,
                                      type=form.type.data,
                                      year=form.year.data,
                                      group=form.group.data)

@@ -27,9 +27,23 @@
 <form method=post>
 {{ form.hidden_tag() }}
   <dl>
+    <div> {{ form.email.label() }} </div>
+        {{ form.email(class="control-group") }}
+</br>
+        <span style="color: red">
+        {% if email_len %}
+            {{ email_len }}
+        {% endif %}
+
+        {% if email_invalid %}
+            {{ email_invalid }}
+        {% endif %}
+        </span>
+
         <div> {{ form.username.label() }} </div>
         {{ form.username(class="control-group") }}
 
+      <span style="color: red">
        </br>{% if error_msg %}
             {{ error_msg }}
         {% endif %}
@@ -37,15 +51,19 @@
         {% if error_format_username %}
             {{ error_format_username }}
         {% endif %}
+      </span>
 
       <div class="container">
       <div>  {{ form.password.label() }} </div>
         {{ form.password(class="control-group") }}
       <i class="far fa-eye" id="togglePassword"></i>
 
-      </br>{% if password_len %}
+      </br>
+           <span style="color: red">
+          {% if password_len %}
             {{ password_len }}
         {% endif %}
+           </span>
       </div>
 
         <div class="container">
@@ -53,8 +71,10 @@
         {{ form.confirm(class="control-group") }}
         <i class="far fa-eye" id="togglePassword"></i>
           </br>
+         <span style="color: red">
             {% if password_match %}
             {{ password_match }}
+         <span style="color: red">
         {% endif %}
       </div>
   </dl>

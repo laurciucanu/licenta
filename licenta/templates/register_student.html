@@ -29,6 +29,19 @@
 <form method=post>
 {{ form.hidden_tag() }}
   <dl>
+        <div> {{ form.email.label() }} </div>
+        {{ form.email(class="control-group") }}
+  </br>
+        <span style="color: red">
+            {% if email_len %}
+            {{ email_len }}
+        {% endif %}
+
+        {% if email_invalid %}
+            {{ email_invalid }}
+        {% endif %}
+
+        </span>
         <div> {{ form.username.label() }} </div>
         {{ form.username(class="control-group") }}
 
