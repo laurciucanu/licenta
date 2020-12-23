@@ -34,6 +34,8 @@ def user_type():
 @app.route('/register_teacher', methods=['GET', 'POST'])
 def register_teacher():
     form = TeacherForm(request.form)
+    isRegistered = False
+
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
             return render_template("register_teacher.html", form=form,
@@ -58,7 +60,8 @@ def register_teacher():
             print(form.username.data)
             db.session.add(profesor)
             db.session.commit()
-            return redirect(url_for('login_teacher', name=form.username.data))
+            isRegistered = True
+            return redirect(url_for('login_teacher', name=form.username.data, isRegistered=isRegistered))
 
     return render_template('register_teacher.html', form=form, name=form.username.data)
 
@@ -66,6 +69,9 @@ def register_teacher():
 @app.route('/login_teacher', methods=['GET', 'POST'])
 def login_teacher():
     form = LoginForm()
+    username = request.args.get('name')
+    registered = request.args.get('isRegistered')
+
     if form.validate_on_submit():
         profesor = profesori.query.filter_by(name=form.username.data).first()
 
@@ -81,7 +87,7 @@ def login_teacher():
     else:
         flash("Try again!")
 
-    return render_template('login_teacher.html', form=form)
+    return render_template('login_teacher.html', form=form, name=username, isRegistered=registered)
 
 
 @app.route('/register_student', methods=['GET', 'POST'])
@@ -91,6 +97,7 @@ def register_student():
     study_type = ['Bachelor', 'Master', 'Phd']
     group = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'E1', 'E2', 'E3', 'X1',
              'X2', 'X3']
+    isRegistered = False
 
     if form.validate():
         if len(form.username.data) < 4 or len(form.username.data) > 20:
@@ -128,7 +135,8 @@ def register_student():
 
             db.session.add(student_entry)
             db.session.commit()
-            return redirect(url_for('login_student', name=form.username.data))
+            isRegistered = True
+            return redirect(url_for('login_student', name=form.username.data, isRegistered=isRegistered))
 
     return render_template('register_student.html', form=form, year=year, type=study_type, group=group)
 
@@ -136,6 +144,9 @@ def register_student():
 @app.route('/login_student', methods=['GET', 'POST'])
 def login_student():
     form = LoginForm()
+    username = request.args.get('name')
+    registered = request.args.get('isRegistered')
+
     if form.validate_on_submit():
         student_entry = studenti.query.filter_by(name=form.username.data).first()
 
@@ -150,7 +161,7 @@ def login_student():
     else:
         flash("Try again!")
 
-    return render_template('login_student.html', form=form)
+    return render_template('login_student.html', form=form, name=username, isRegistered=registered)
 
 
 @app.route("/logout")
@@ -232,6 +243,14 @@ def allowed_file(filename):
 def upload_form():
     if session['logged_in']:
         return render_template('upload.html')
+    else:
+        return redirect(url_for('login_required'))
+
+
+@app.route('/uploadTeacherHomework')
+def uploadTeacherHomework():
+    if session['logged_in']:
+        return render_template('uploadTeacherHomework.html')
     else:
         return redirect(url_for('login_required'))
 

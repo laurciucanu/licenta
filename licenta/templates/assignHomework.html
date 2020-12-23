@@ -4,6 +4,8 @@
     <title>Homework assign</title>
     <link rel="stylesheet" href="static\css\styles.css" type="text/css">
     <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
+    <script type="text/javascript" src="static\js\selector.js"></script>
+    <script type="text/javascript" src="static\js\jquery.js"></script>
 
 </head>
 
@@ -30,12 +32,12 @@
         {{ form.errors }}
         {% endif %}
 
-        <center><p>Assign the homework:
+        <center><p class="text">Assign the homework:
 
             {{ form.title.label() }}
 {#            {{ form.title(class="control-group") }}#}
 
-        <select name="title">
+        <select name="title" id="resizing_select">
               {% for titleHomework in title %}
                   <option value="{{ titleHomework.title }}">{{  titleHomework.title }}</option>
               {% endfor %}
@@ -44,7 +46,7 @@
         to the group:
 
         {{ form.group.label() }}
-        <select name="group">
+        <select name="group" id="resizing_select">
           {% for item in group %}
               <option value="{{ item.group }}">{{ item.group }}</option>
           {% endfor %}

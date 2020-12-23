@@ -4,81 +4,86 @@
 {% from "_formhelpers.html" import render_field %}
 
 <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="/register_laboratories">Laboratoare</a>
-      <a href="/note">Note</a>
-      <a href='/logout'>Logout</a>
-      <a href='/register_teacher'>Teacher Registration</a>
-      <a href="/register_student">Student Registration</a>
-      <a href="/upload">Homework upload</a>
-      <a href="/assignHomework">Assign homework</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/register_laboratories">Laboratoare</a>
+    <a href="/note">Note</a>
+    <a href='/logout'>Logout</a>
+    <a href='/register_teacher'>Teacher Registration</a>
+    <a href="/register_student">Student Registration</a>
+    <a href="/upload">Homework upload</a>
+    <a href="/assignHomework">Assign homework</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
 
+<body class="body_student">
 <div class="register">
     <div class="register-screen">
-    <div class="register-form">
-        <div class="app-title">
-				<h1>Laborator</h1>
-        </div>
-<form method=post>
-{{ form.hidden_tag() }}
+        <div class="register-form">
+            <div class="app-title">
+                <h1>Laborator</h1>
+            </div>
+            <form method=post>
+                {{ form.hidden_tag() }}
 
-      <div> {{ form.title.label() }} </div>
-          {{ form.title(class="control-group") }}
+                <div> {{ form.title.label() }} </div>
+                {{ form.title(class="control-group") }}
 
-        </br>
-        {% if empty_title %}
+                </br>
+                {% if empty_title %}
                     {{ empty_title }}
-        {% endif %}
+                {% endif %}
 
-        </br>
-        {% if wrong_title %}
-            {{ wrong_title }}
-        {% endif %}
+                </br>
+                {% if wrong_title %}
+                    {{ wrong_title }}
+                {% endif %}
 
-        </br>
-        {% if format_title_error %}
-            {{ format_title_error }}
-        {% endif %}
+                </br>
+                {% if format_title_error %}
+                    {{ format_title_error }}
+                {% endif %}
 
-      <div> {{ form.content.label() }} </div>
-          {{ form.content(class="control-group") }}
+                <div> {{ form.content.label() }} </div>
+                {{ form.content(class="control-group") }}
 
-      </br>{% if empty_content %}
+                </br>{% if empty_content %}
                 {{ empty_content }}
             {% endif %}
 
-       </br>{% if wrong_content %}
-            {{ wrong_content }}
-        {% endif %}
+                </br>{% if wrong_content %}
+                {{ wrong_content }}
+            {% endif %}
 
-        <div> {{ form.year.label() }} </div>
+                <div> {{ form.year.label() }} </div>
 
-             <select name="year" class="dropdown-select">
+                <select name="year" class="dropdown-select">
                     {% for y in year %}
                         <option value="{{ y }}">{{ y }}</option>
-                     {% endfor %}
-             </select>
+                    {% endfor %}
+                </select>
 
-        {% if empty_year %}
-            {{ empty_year }}
-        {% endif %}
+                {% if empty_year %}
+                    {{ empty_year }}
+                {% endif %}
 
-        <div> {{ form.group.label() }} </div>
-             <select name="group" class="dropdown-select">
+                <div> {{ form.group.label() }} </div>
+                <select name="group" class="dropdown-select">
                     {% for g in group %}
                         <option value="{{ g }}">{{ g }}</option>
                     {% endfor %}
-              </select>
+                </select>
 
-        {% if empty_group %}
-            {{ empty_group }}
-        {% endif %}
+                {% if empty_group %}
+                    {{ empty_group }}
+                {% endif %}
 
-        {{  form.submit(class="btn") }}
-</form>
-    </div>
+                {{ form.submit(class="btn") }}
+            </form>
+
+            Or upload a custom homework file: <a href="/uploadTeacherHomework">Homework upload</a>
+
+        </div>
     </div>
 </div>
+</body>

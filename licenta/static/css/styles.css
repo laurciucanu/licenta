@@ -632,3 +632,40 @@ dd {
   text-decoration: none;
   cursor: pointer;
 }
+
+#resizing_select {
+  font-family: Montserrat-Black;
+  margin-bottom: 20px;
+  align-content: center;
+  background-color: #ECF0F1;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  font-size: 18px;
+  font-weight: 200;
+  padding: 5px 0px 5px 5px;
+  /*width: 80px;*/
+  transition: border .5s;
+}
+
+#width_tmp_select{
+  display : none;
+}
+
+.text{
+  font-family: Montserrat-Black;
+  font-size: 19px;
+  font-weight: 200;
+}
+
+/*.resizeselect{*/
+/*  margin-bottom: 20px;*/
+/*  align-content: center;*/
+/*  background-color: #ECF0F1;*/
+/*  border: 2px solid transparent;*/
+/*  border-radius: 3px;*/
+/*  font-size: 16px;*/
+/*  font-weight: 200;*/
+/*  padding: 5px 0px 5px 5px;*/
+/*  !*width: 80px;*!*/
+/*  transition: border .5s;*/
+/*}*/

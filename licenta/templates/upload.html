@@ -6,41 +6,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="/register_laboratories">Laboratoare</a>
-      <a href="/note">Note</a>
-      <a href='/logout'>Logout</a>
-      <a href='/register_teacher'>Teacher Registration</a>
-      <a href="/register_student">Student Registration</a>
-      <a href="/upload">Homework upload</a>
-      <a href="/assignHomework">Assign homework</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/register_laboratories">Laboratoare</a>
+    <a href="/note">Note</a>
+    <a href='/logout'>Logout</a>
+    <a href='/register_teacher'>Teacher Registration</a>
+    <a href="/register_student">Student Registration</a>
+    <a href="/upload">Homework upload</a>
+    <a href="/assignHomework">Assign homework</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer; color: black" onclick="openNav()">&#9776; Menu</span>
 <body class="body_profesor">
-<h2><center>Select a file to upload</center></h2>
-<h3><center>Upload only .zip, .rar or .7z archives!</center></h3>
+<h2>
+    <center>Select a file to upload</center>
+</h2>
+<h3>
+    <center>Upload only .zip, .rar or .7z archives!</center>
+</h3>
 <p>
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul class=flashes><center>
-		{% for message in messages %}
-            {{ message }}
-		{% endfor %}
-		</center></ul>
-	  {% endif %}
-	{% endwith %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                <center>
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </center>
+            </ul>
+        {% endif %}
+    {% endwith %}
 </p>
 <form method="post" action="/" enctype="multipart/form-data">
     <center>
-    <dl>
-		<p>
-			<input class="input_upload" type="file" name="file" autocomplete="off" required style="background: url("../images/3.jpg") no-repeat center;">
-		</p>
-    </dl>
-    <p>
-		<input class="btn" type="submit" value="Submit">
-	</p>
+        <dl>
+            <p>
+                <input class="input_upload" type="file" name="file" autocomplete="off" required style="background: url("
+                       ../images/3.jpg") no-repeat center;">
+            </p>
+        </dl>
+        <p>
+            <input class="btn" type="submit" value="Submit">
+        </p>
     </center>
 </form>
 

@@ -6,21 +6,21 @@
 {% from "_formhelpers.html" import render_field %}
 
 <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="/register_laboratories">Laboratoare</a>
-      <a href="/note">Note</a>
-      <a href='/logout'>Logout</a>
-      <a href='/register_teacher'>Teacher Registration</a>
-      <a href="/register_student">Student Registration</a>
-      <a href="/upload">Homework upload</a>
-      <a href="/assignHomework">Assign homework</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/register_laboratories">Laboratoare</a>
+    <a href="/note">Note</a>
+    <a href='/logout'>Logout</a>
+    <a href='/register_teacher'>Teacher Registration</a>
+    <a href="/register_student">Student Registration</a>
+    <a href="/upload">Homework upload</a>
+    <a href="/assignHomework">Assign homework</a>
 </div>
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
 <head>
     <script>
         //Modal for login message
-        $(document).ready(function(){
+        $(document).ready(function () {
             $("#myModal").modal('show');
         });
     </script>
@@ -28,53 +28,69 @@
 <body class="body_profesor">
 <div class="login">
     <div class="login-screen">
-    <div class="login-form">
-        <div class="app-title">
-				<h1>Teacher Login</h1>
+        <div class="login-form">
+            <div class="app-title">
+                <h1>Teacher Login</h1>
+            </div>
+            <form method=POST>
+                {{ form.hidden_tag() }}
+                <dl>
+                    {# Show the modal only if the teacher is recently registered! #}
+                    {% if isRegistered %}
+
+                    <div id="myModal" class="modal">
+
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <center><p>Your account {{ name }} is registered successfully!</p></center>
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                    <script type="text/javascript" src="static\js\modal.js"></script>
+
+                    {% if form.username.errors %}
+                        {{ form.username(class="control-group is-invalid") }}
+
+                        <div class="invalid-feedback">
+                            <span>{{ form.username.errors[0] }}</span>
+                        </div>
+
+                    {% else %}
+
+                        <div> {{ form.username.label() }} </div>
+                        {{ form.username(class="control-group") }}
+                    <span style="color: red">
+                        {% if wrong_username %}
+                            {{ wrong_username }}
+                        <p></p>
+                        {% endif %}
+                    </span>
+
+                    {% endif %}
+
+                    <div> {{ form.password.label() }} </div>
+                    {{ form.password(class="control-group") }}
+
+                    <span style="color: red">
+                    {% if wrong_password %}
+                        {{ wrong_password }}
+
+                    {% endif %}
+                </br>
+                    </span>
+
+                </dl>
+                {{ form.submit(class="btn") }}
+            </form>
+
+            <center><p>Don't have an account?</p>
+
+                <p style="margin-top: -10px"><a href="/register_teacher">Register here</a></p>
+            </center>
+
         </div>
-<form method=POST>
-{{ form.hidden_tag() }}
-  <dl>
-      <!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <center><p>Your account {{ name }} is registered successfully!</p></center>
-  </div>
-
-</div>
-<script type="text/javascript" src="static\js\modal.js"></script>
-
-      {% if form.username.errors %}
-            {{ form.username(class="control-group is-invalid")}}
-
-      <div class="invalid-feedback">
-            <span>{{ form.username.errors[0] }}</span>
-      </div>
-
-      {% else %}
-        <div> {{ form.username.label() }} </div>
-              {{ form.username(class="control-group") }}
-              {% if wrong_username %}
-                 {{ wrong_username }}
-              {% endif %}
-      {% endif %}
-      <div> {{ form.password.label() }} </div>
-      {{ form.password(class="control-group")}}
-        {% if wrong_password %}
-             {{ wrong_password }}
-       {% endif %}
-
-  </dl>
-   {{ form.submit(class="btn")}}
-</form>
-
-    <p>Don't have an account?
-        <a href="/register_teacher">Register here</a>
-    </p>
-
-    </div>
     </div>
 </div>
