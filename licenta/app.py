@@ -6,7 +6,7 @@ from validate_email import validate_email
 from licenta import login_manager, app, models
 from licenta.forms import *
 from licenta.models import profesori, studenti, laborator
-
+import re
 
 @login_manager.user_loader
 def load_user(user):
@@ -47,7 +47,7 @@ def register_teacher():
             return render_template("register_teacher.html", form=form, error_msg="\n Enter another name!")
         elif len(form.email.data) == 0:
             return render_template("register_teacher.html", form=form, email_len="\n Enter an email address!")
-        elif validate_email(form.email.data) is False:
+        elif email_validation(form.email.data) is False:
             return render_template("register_teacher.html", form=form, email_invalid="\n Enter a correct email address!")
         elif len(form.password.data) == 0:
             return render_template("register_teacher.html", form=form, password_len="\n Enter a password!")
@@ -111,7 +111,7 @@ def register_student():
             return render_template("register_student.html", form=form, error_msg="\n Enter another name!")
         elif len(form.email.data) == 0:
             return render_template("register_student.html", form=form, email_len="\n Enter an email address!")
-        elif validate_email(form.email.data) is False:
+        elif email_validation(form.email.data) is False:
             return render_template("register_student.html", form=form, email_invalid="\n Enter a correct email address!")
         elif exist_nr_matricol:
             return render_template("register_student.html", form=form,
@@ -139,6 +139,14 @@ def register_student():
             return redirect(url_for('login_student', name=form.username.data, isRegistered=isRegistered))
 
     return render_template('register_student.html', form=form, year=year, type=study_type, group=group)
+
+
+def email_validation(email):
+    regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+    if (re.search(regex, email)):
+        return True
+    else:
+        return False
 
 
 @app.route('/login_student', methods=['GET', 'POST'])
@@ -273,7 +281,7 @@ def upload_file():
             flash('File successfully uploaded')
             return redirect('/upload')
         else:
-            flash('Allowed file types zip, rar and 7z!')
+            flash('Allowed file types are: zip, rar and 7z!')
             return redirect('/upload')
 
 
