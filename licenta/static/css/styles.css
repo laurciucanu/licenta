@@ -306,7 +306,8 @@ padding: 50px;
 }
 
 .body_student {
-  background: url("../images/3.jpg") no-repeat center center fixed;
+  /*background-color: #008181;*/
+  background: url("../images/5.png") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -443,7 +444,7 @@ box-shadow: none;
 .btn {
   border: 2px solid transparent;
   background: #0bdb00;
-  color: #ffffff;
+  color: #001e1d;
   font-size: 16px;
   line-height: 25px;
   padding: 10px 0;

@@ -2,11 +2,11 @@ import os
 from flask import flash, redirect, render_template, request, session, url_for
 from flask_user.tests.tst_app import User
 from werkzeug.utils import secure_filename
-from validate_email import validate_email
 from licenta import login_manager, app, models
 from licenta.forms import *
 from licenta.models import profesori, studenti, laborator
 import re
+
 
 @login_manager.user_loader
 def load_user(user):

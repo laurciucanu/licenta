@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from sqlalchemy.orm import relationship
 from wtforms import StringField, PasswordField, validators, SubmitField, IntegerField, FieldList
 from wtforms.fields import FormField
 from wtforms_alchemy import ModelFieldList, ModelFormMeta
