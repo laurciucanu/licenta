@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="static\css\styles.css" type="text/css">
 <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
 <script src="static\js\jquery.min.js"></script>
@@ -34,9 +35,9 @@
             </div>
             <form method=POST>
                 {{ form.hidden_tag() }}
-                <dl>
-                    {# Show the modal only if the teacher is recently registered! #}
-                    {% if isRegistered %}
+
+                {# Show the modal only if the teacher is recently registered! #}
+                {% if isRegistered %}
 
                     <div id="myModal" class="modal">
 
@@ -47,41 +48,45 @@
 
                     </div>
 
-                    {% endif %}
+                {% endif %}
 
-                    <script type="text/javascript" src="static\js\modal.js"></script>
+                <script type="text/javascript" src="static\js\modal.js"></script>
 
-                    {% if form.username.errors %}
-                        {{ form.username(class="control-group is-invalid") }}
+                {% if form.username.errors %}
+                    {{ form.username(class="control-group is-invalid") }}
 
-                        <div class="invalid-feedback">
-                            <span>{{ form.username.errors[0] }}</span>
-                        </div>
+                    <div class="invalid-feedback">
+                        <span>{{ form.username.errors[0] }}</span>
+                    </div>
 
-                    {% else %}
+                {% else %}
 
-                        <div> {{ form.username.label() }} </div>
-                        {{ form.username(class="control-group") }}
+                    <div> {{ form.username.label() }} </div>
+                    {{ form.username(class="control-group") }}
                     <span style="color: red">
                         {% if wrong_username %}
                             {{ wrong_username }}
-                        <p></p>
+                            <p></p>
                         {% endif %}
                     </span>
 
-                    {% endif %}
+                {% endif %}
 
+                <div class="container">
                     <div> {{ form.password.label() }} </div>
                     {{ form.password(class="control-group") }}
+                    <i class="far fa-eye" id="togglePassword"></i>
+
+                    <script type="text/javascript" src="static\js\passwordField.js"></script>
 
                     <span style="color: red">
                     {% if wrong_password %}
                         {{ wrong_password }}
 
                     {% endif %}
-                </br>
+                        </br>
                     </span>
-
+                </div>
                 </dl>
                 {{ form.submit(class="btn") }}
             </form>
@@ -94,3 +99,4 @@
         </div>
     </div>
 </div>
+</body>

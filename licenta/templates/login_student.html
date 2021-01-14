@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="static\css\styles.css" type="text/css">
 <script type="text/javascript" src="static\js\dropdownMenu.js"></script>
 <script src="static\js\jquery.min.js"></script>
@@ -25,6 +26,8 @@
             $("#myModal").modal('show');
         });
     </script>
+
+    {#    <script type="text/javascript" src="static\js\passwordField.js"></script>#}
 </head>
 
 <body class="body_student">
@@ -42,14 +45,14 @@
                     {# Show the modal only if the student is recently registered! #}
                     {% if isRegistered %}
 
-                    <div id="myModal" class="modal">
+                        <div id="myModal" class="modal">
 
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <center><p>Your account {{ name }} is registered successfully!</p></center>
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <center><p>Your account {{ name }} is registered successfully!</p></center>
+                            </div>
+
                         </div>
-
-                    </div>
 
                     {% endif %}
 
@@ -75,20 +78,21 @@
                                 </center>
 
             </span>
-
                     {% endif %}
 
-                    <center>
-                        <div> {{ form.password.label() }} </div>
-                    </center>
-                    {{ form.password(class="control-group") }}
-                    <span style="color: red">
-                      <center>
+                    <div class="container">
+                        <div>  {{ form.password.label() }} </div>
+                        {{ form.password(class="control-group") }}
+                        <i class="far fa-eye" id="togglePassword"></i>
+                        </br>
+                        <script type="text/javascript" src="static\js\passwordField.js"></script>
+                        <span style="color: red">
                           {% if wrong_password %}
                               {{ wrong_password }}
                           {% endif %}
-                       </center>
-      </span>
+                    </span>
+                    </div>
+                    </divspan>
                 </dl>
                 {{ form.submit(class="btn") }}
             </form>
@@ -100,3 +104,5 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="static\js\passwordField.js"></script>
+</body>
