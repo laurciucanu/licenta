@@ -192,20 +192,20 @@ td, th {
 
 .dropdown-select{
   margin-bottom: 20px;
-  align-content: center;
   background-color: #ECF0F1;
   border: 2px solid transparent;
   border-radius: 3px;
   font-size: 16px;
   font-weight: 200;
-  padding: 10px 0px 10px 100px;
+  padding: 10px 0px 10px 0px;
   width: 230px;
   transition: border .5s;
+  text-align: left;
 }
 
 .dropdown-type{
   margin-bottom: 20px;
-  align-content: center;
+  /*align-content: left;*/
   background-color: #ECF0F1;
   border: 2px solid transparent;
   border-radius: 3px;
@@ -214,6 +214,8 @@ td, th {
   padding: 10px 0px 10px 90px;
   width: 230px;
   transition: border .5s;
+  text-align: left;
+  margin-left: -5%;
 }
 
 .dropdown-content {
@@ -398,20 +400,42 @@ color: #0ecc67;
 .login-form {
 text-align: center;
 }
+
 .register-form{
   text-align: center;
 }
+
 .control-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.control-group2 {
+  margin-left: 10%;
+  margin-bottom: 20px;
+}
+
+.control-group3 {
+  margin-left: -2%;
+  margin-right: -12%;
 }
 
 .container i {
-    margin-left: -30px;
+    /*margin-left: -30px;*/
     cursor: pointer;
 }
 
+.customLabel{
+  text-align: left;
+  margin-left: 12%;
+}
+
+.customLabel2{
+  text-align: left;
+  margin-left: 6%;
+}
+
 input {
-    text-align: center;
+    text-align: left;
     background-color: #ECF0F1;
     border: 2px solid transparent;
     border-radius: 3px;
@@ -437,14 +461,15 @@ input#content{
 }
 
 input:focus {
-border: 2px solid #3498DB;
-box-shadow: none;
+  border: 2px solid #3498DB;
+  box-shadow: none;
 }
 
 .btn {
   border: 2px solid transparent;
-  background: #0bdb00;
-  color: #001e1d;
+  background: #28a745;
+  border-color: #28a745;
+  color: white;
   font-size: 16px;
   line-height: 25px;
   padding: 10px 0;
@@ -456,6 +481,7 @@ box-shadow: none;
   display: block;
   width: 250px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .btn:hover {
@@ -658,6 +684,9 @@ dd {
   font-weight: 200;
 }
 
+/*.select, option{*/
+/*  text-align: left;*/
+/*}*/
 /*.resizeselect{*/
 /*  margin-bottom: 20px;*/
 /*  align-content: center;*/
@@ -670,3 +699,7 @@ dd {
 /*  !*width: 80px;*!*/
 /*  transition: border .5s;*/
 /*}*/
+
+.i {
+  padding-right: 20%;
+}

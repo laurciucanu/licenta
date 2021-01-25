@@ -29,7 +29,7 @@
 <form method=post>
 {{ form.hidden_tag() }}
   <dl>
-        <div> {{ form.email.label() }} </div>
+        <div class="customLabel"> {{ form.email.label() }} </div>
         {{ form.email(class="control-group") }}
   </br>
         <span style="color: red">
@@ -42,7 +42,7 @@
         {% endif %}
 
         </span>
-        <div> {{ form.username.label() }} </div>
+        <div class="customLabel"> {{ form.username.label() }} </div>
         {{ form.username(class="control-group") }}
 
        </br>
@@ -56,7 +56,7 @@
             {% endif %}
       </span>
 
-        <div> {{ form.nr_matricol.label() }} </div>
+        <div class="customLabel"> {{ form.nr_matricol.label() }} </div>
         {{ form.nr_matricol(class="control-group") }}
 
        </br>
@@ -71,15 +71,15 @@
 
         </span>
 
-        <div> {{ form.type.label() }} </div>
+        <div class="customLabel"> {{ form.type.label() }} </div>
 
-             <select name="type" class="dropdown-type">
+             <select name="type" class="dropdown-select">
                     {% for t in type %}
                         <option value="{{ t }}">{{ t }}</option>
                     {% endfor %}
             </select>
 
-        <div> {{ form.year.label() }} </div>
+        <div class="customLabel"> {{ form.year.label() }} </div>
 
         <select name="year" class="dropdown-select">
             {% for y in year %}
@@ -87,7 +87,7 @@
             {% endfor %}
         </select>
 
-      <div> {{ form.group.label() }} </div>
+      <div class="customLabel"> {{ form.group.label() }} </div>
               <select name="group" class="dropdown-select">
             {% for g in group %}
                 <option value="{{ g }}">{{ g }}</option>
@@ -96,8 +96,8 @@
 
       <div class="container">
 
-      <div>  {{ form.password.label() }} </div>
-        {{ form.password(class="control-group") }}
+      <div class="customLabel">  {{ form.password.label() }} </div>
+        {{ form.password(class="control-group2") }}
         <i class="far fa-eye" id="togglePassword"></i>
       </br>
      <span style="color: red">
@@ -106,8 +106,8 @@
         {% endif %}
      </span>
 
-      <div> {{ form.confirm.label() }} </div>
-            {{ form.confirm(class="control-group") }}
+      <div class="customLabel"> {{ form.confirm.label() }} </div>
+            {{ form.confirm(class="control-group2") }}
             <i class="far fa-eye" id="toggleConfirm"></i>
         </br>
       </div>

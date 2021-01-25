@@ -64,37 +64,35 @@
                             <<span style="color: red">{{ form.username.errors[0] }}</span>
                         </div>
                     {% else %}
-                        <center>
-                            <div> {{ form.username.label() }} </div>
-                        </center>
-                        {{ form.username(class="control-group") }}
 
-                        <span style="color: red">
-                                <center>
-                                 {% if wrong_username %}
-                                     {{ wrong_username }}
-                                     <p></p>
-                                 {% endif %}
-                                </center>
+                    <div class="customLabel2"> {{ form.username.label() }} </div>
+                    {{ form.username(class="control-group") }}
 
-            </span>
+                    <span style="color: red">
+                            <center>
+                             {% if wrong_username %}
+                                 {{ wrong_username }}
+                                 <p></p>
+                             {% endif %}
+                            </center>
+
+        </span>
                     {% endif %}
 
-                    <div class="container">
-                        <div>  {{ form.password.label() }} </div>
-                        {{ form.password(class="control-group") }}
+                        <div class="customLabel2">  {{ form.password.label() }} </div>
+                        {{ form.password(class="control-group3") }}
                         <i class="far fa-eye" id="togglePassword"></i>
-                        </br>
+</br>
                         <script type="text/javascript" src="static\js\passwordField.js"></script>
                         <span style="color: red">
                           {% if wrong_password %}
                               {{ wrong_password }}
                           {% endif %}
                     </span>
-                    </div>
                     </divspan>
+
                 </dl>
-                {{ form.submit(class="btn") }}
+            {{ form.submit(class="btn") }}
             </form>
 
             <center><p>Don't have an account?</p>

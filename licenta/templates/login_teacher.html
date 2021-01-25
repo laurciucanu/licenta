@@ -61,7 +61,7 @@
 
                 {% else %}
 
-                    <div> {{ form.username.label() }} </div>
+                    <div class="customLabel2"> {{ form.username.label() }} </div>
                     {{ form.username(class="control-group") }}
                     <span style="color: red">
                         {% if wrong_username %}
@@ -72,9 +72,8 @@
 
                 {% endif %}
 
-                <div class="container">
-                    <div> {{ form.password.label() }} </div>
-                    {{ form.password(class="control-group") }}
+                    <div class="customLabel2"> {{ form.password.label() }} </div>
+                    {{ form.password(class="control-group3") }}
                     <i class="far fa-eye" id="togglePassword"></i>
 
                     <script type="text/javascript" src="static\js\passwordField.js"></script>
