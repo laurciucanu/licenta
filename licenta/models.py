@@ -2,7 +2,7 @@ from flask_login import UserMixin
 from sqlalchemy import ARRAY
 from sqlalchemy.ext.mutable import MutableList
 from werkzeug.security import generate_password_hash, check_password_hash
-from licenta.forms import db
+from licenta import db
 
 
 class profesori(db.Model, UserMixin):

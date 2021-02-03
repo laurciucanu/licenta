@@ -3,8 +3,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators, SubmitField, IntegerField, FieldList
 from wtforms.fields import FormField
 from wtforms_alchemy import ModelFieldList, ModelFormMeta
+from licenta import db
 
-db = SQLAlchemy()
 
 class TeacherForm(FlaskForm):
     email = StringField('Email')
