@@ -8,17 +8,17 @@ from licenta.models import profesori, studenti, laborator
 import re
 
 
-@login_manager.user_loader
-def load_user(user):
-    return User.get(user)
-
-
-@app.route('/')
+@app.route("/")
 def home():
     if not session.get('logged_in'):
         return redirect(url_for('login_teacher'))
     else:
         return redirect(url_for('index'))
+
+
+@login_manager.user_loader
+def load_user(user):
+    return User.get(user)
 
 
 @app.route("/index")
@@ -344,4 +344,4 @@ if __name__ == "__main__":
     UPLOAD_FOLDER = 'D:/uploads'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-    app.run(debug=True)
+    app.run(debug=True, host='127.0.0.1', port=5001)
